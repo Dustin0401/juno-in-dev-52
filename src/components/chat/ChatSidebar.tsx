@@ -47,7 +47,7 @@ export function ChatSidebar() {
         >
           <NavLink to="/chat/new">
             <Plus className="w-4 h-4 mr-2" />
-            New Research
+            New Chat
           </NavLink>
         </Button>
       </div>
