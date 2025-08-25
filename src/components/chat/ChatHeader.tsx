@@ -138,7 +138,7 @@ export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
           </Button>
         ) : (
           <Button
-            variant="hero"
+            variant="outline"
             size="sm"
             onClick={() => open()}
             className="gap-2"
