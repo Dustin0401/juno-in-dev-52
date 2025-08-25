@@ -2,11 +2,12 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
-import { Menu, Wallet, ChevronDown, Search, Bell, History, Settings } from 'lucide-react'
-import { useAccount, useDisconnect } from 'wagmi'
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { Menu, ChevronDown, Search, Bell, History, Settings } from 'lucide-react'
+import { useAccount } from 'wagmi'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { WalletModal } from './WalletModal'
+import profileAvatar from '@/assets/profile-avatar.png'
 
 interface ChatHeaderProps {
   sidebarOpen: boolean
@@ -27,10 +28,9 @@ const TIMEFRAMES = ['1h', '4h', '1d', '1w', '1M']
 
 export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
   const { address, isConnected } = useAccount()
-  const { disconnect } = useDisconnect()
-  const { open } = useWeb3Modal()
   const [selectedCrypto, setSelectedCrypto] = useState('')
   const [cryptoPopoverOpen, setCryptoPopoverOpen] = useState(false)
+  const [walletModalOpen, setWalletModalOpen] = useState(false)
 
   const mockStakingTier = 'analyst' // This would come from real staking data
 
@@ -165,30 +165,25 @@ export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
           </Badge>
         )}
 
-        {/* Wallet Connection */}
-        {isConnected ? (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => disconnect()}
-            className="gap-2"
-          >
-            <Wallet className="w-4 h-4" />
-            <span className="hidden sm:inline">
-              {address?.slice(0, 6)}...{address?.slice(-4)}
-            </span>
-          </Button>
-        ) : (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => open()}
-            className="gap-2"
-          >
-            <Wallet className="w-4 h-4" />
-            <span className="hidden sm:inline">Connect Wallet</span>
-          </Button>
-        )}
+        {/* Profile Avatar */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setWalletModalOpen(true)}
+          className="p-1 rounded-full hover:bg-surface"
+        >
+          <img 
+            src={profileAvatar} 
+            alt="Profile" 
+            className="w-8 h-8 rounded-full"
+          />
+        </Button>
+
+        {/* Wallet Modal */}
+        <WalletModal 
+          open={walletModalOpen} 
+          onOpenChange={setWalletModalOpen} 
+        />
       </div>
     </header>
   )
