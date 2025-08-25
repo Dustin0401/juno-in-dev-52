@@ -2,10 +2,11 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
-import { Menu, Wallet, ChevronDown, Search } from 'lucide-react'
+import { Menu, Wallet, ChevronDown, Search, Bell, History, Settings } from 'lucide-react'
 import { useAccount, useDisconnect } from 'wagmi'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 interface ChatHeaderProps {
   sidebarOpen: boolean
@@ -116,6 +117,47 @@ export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
 
       {/* Right Side */}
       <div className="flex items-center gap-3">
+        {/* Navigation Items */}
+        <div className="hidden sm:flex items-center gap-1">
+          <NavLink to="/alerts">
+            {({ isActive }) => (
+              <Button
+                variant={isActive ? "secondary" : "ghost"}
+                size="sm"
+                className="h-8 px-3 text-xs gap-2"
+              >
+                <Bell className="w-4 h-4" />
+                <span className="hidden md:inline">Alerts</span>
+              </Button>
+            )}
+          </NavLink>
+          
+          <NavLink to="/backtests">
+            {({ isActive }) => (
+              <Button
+                variant={isActive ? "secondary" : "ghost"}
+                size="sm"
+                className="h-8 px-3 text-xs gap-2"
+              >
+                <History className="w-4 h-4" />
+                <span className="hidden md:inline">Backtest</span>
+              </Button>
+            )}
+          </NavLink>
+          
+          <NavLink to="/settings">
+            {({ isActive }) => (
+              <Button
+                variant={isActive ? "secondary" : "ghost"}
+                size="sm"
+                className="h-8 px-3 text-xs gap-2"
+              >
+                <Settings className="w-4 h-4" />
+                <span className="hidden md:inline">Settings</span>
+              </Button>
+            )}
+          </NavLink>
+        </div>
         {/* Tier Badge */}
         {isConnected && (
           <Badge variant="secondary" className="capitalize">

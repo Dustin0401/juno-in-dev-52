@@ -6,11 +6,8 @@ import { Separator } from '@/components/ui/separator'
 import { 
   MessageSquare, 
   Plus, 
-  History, 
-  Bell, 
   TrendingUp, 
-  Upload,
-  Settings
+  Upload
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Conversation } from '@/types'
@@ -82,57 +79,6 @@ export function ChatSidebar() {
           Portfolio
         </NavLink>
 
-        <NavLink
-          to="/alerts"
-          className={({ isActive }) => cn(
-            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
-            isActive 
-              ? "bg-primary/10 text-primary" 
-              : "text-muted hover:bg-surface hover:text-foreground"
-          )}
-        >
-          <Bell className="w-4 h-4" />
-          Alerts
-        </NavLink>
-
-        <NavLink
-          to="/backtests"
-          className={({ isActive }) => cn(
-            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
-            isActive 
-              ? "bg-primary/10 text-primary" 
-              : "text-muted hover:bg-surface hover:text-foreground"
-          )}
-        >
-          <History className="w-4 h-4" />
-          Backtests
-        </NavLink>
-
-        <NavLink
-          to="/uploads"
-          className={({ isActive }) => cn(
-            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
-            isActive 
-              ? "bg-primary/10 text-primary" 
-              : "text-muted hover:bg-surface hover:text-foreground"
-          )}
-        >
-          <Upload className="w-4 h-4" />
-          Uploads
-        </NavLink>
-
-        <NavLink
-          to="/settings"
-          className={({ isActive }) => cn(
-            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
-            isActive 
-              ? "bg-primary/10 text-primary" 
-              : "text-muted hover:bg-surface hover:text-foreground"
-          )}
-        >
-          <Settings className="w-4 h-4" />
-          Settings
-        </NavLink>
       </div>
 
       <Separator />
