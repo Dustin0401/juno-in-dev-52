@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -27,6 +28,19 @@ export function ChatInterface() {
   const [attachedFiles, setAttachedFiles] = useState<File[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   const coordinator = useRef(new AgentCoordinator())
+  const { id } = useParams()
+  const navigate = useNavigate()
+
+  // Reset conversation when navigating to /chat/new
+  useEffect(() => {
+    if (id === 'new') {
+      setMessages([])
+      setInput('')
+      setAttachedFiles([])
+      setIsLoading(false)
+      setShowSlashMenu(false)
+    }
+  }, [id])
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
@@ -76,6 +90,12 @@ export function ChatInterface() {
 
       setMessages(prev => [...prev, agentResponse])
       setAttachedFiles([])
+      
+      // If we're on /chat/new, navigate to a new conversation ID
+      if (id === 'new') {
+        const conversationId = Date.now().toString()
+        navigate(`/chat/${conversationId}`, { replace: true })
+      }
     } catch (error) {
       console.error('Error processing message:', error)
       
