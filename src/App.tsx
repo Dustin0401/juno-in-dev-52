@@ -1,0 +1,56 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { WalletProvider } from "@/lib/wallet";
+import { ChatLayout } from "@/components/chat/ChatLayout";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+import Chat from "./pages/Chat";
+import Portfolio from "./pages/Portfolio";
+import Settings from "./pages/Settings";
+import Team from "./pages/Team";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <WalletProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/chat" element={<ChatLayout />}>
+              <Route index element={<Chat />} />
+              <Route path="new" element={<Chat />} />
+              <Route path=":id" element={<Chat />} />
+            </Route>
+            <Route path="/portfolio" element={<ChatLayout />}>
+              <Route index element={<Portfolio />} />
+            </Route>
+            <Route path="/settings" element={<ChatLayout />}>
+              <Route index element={<Settings />} />
+            </Route>
+            <Route path="/alerts" element={<ChatLayout />}>
+              <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Alerts</h1><p className="text-muted">Coming soon...</p></div>} />
+            </Route>
+            <Route path="/backtests" element={<ChatLayout />}>
+              <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Backtests</h1><p className="text-muted">Coming soon...</p></div>} />
+            </Route>
+            <Route path="/uploads" element={<ChatLayout />}>
+              <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Uploads</h1><p className="text-muted">Coming soon...</p></div>} />
+            </Route>
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </WalletProvider>
+  </QueryClientProvider>
+);
+
+export default App;

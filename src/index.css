@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Juno Design System - Dark charcoal + lime accent theme
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Core Background Colors */
+    --background: 150 20% 4%;  /* Deep charcoal #0B0F0A */
+    --surface: 150 15% 7%;     /* Surface cards #111612 */
+    --foreground: 150 15% 85%; /* Main text #D6E3CF */
+    
+    /* Card System */
+    --card: 150 15% 7%;        /* Surface cards */
+    --card-foreground: 150 15% 85%;
+
+    /* Popover System */
+    --popover: 150 15% 7%;
+    --popover-foreground: 150 15% 85%;
+
+    /* Primary - Lime Accent System */
+    --primary: 75 85% 55%;     /* Bright lime #C8F31D */
+    --primary-foreground: 150 20% 4%;  /* Dark text on lime */
+    --primary-hover: 75 85% 45%;
+    
+    /* Secondary - Muted tones */
+    --secondary: 150 10% 15%;
+    --secondary-foreground: 150 10% 70%;
+
+    /* Muted text and elements */
+    --muted: 150 10% 15%;
+    --muted-foreground: 150 8% 60%;  /* #98A28F */
+
+    /* Accent - same as primary for consistency */
+    --accent: 75 85% 55%;
+    --accent-foreground: 150 20% 4%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 150 15% 85%;
+
+    /* Borders and inputs */
+    --border: 150 10% 12%;     /* Subtle line #1A2019 */
+    --input: 150 10% 12%;
+    --ring: 75 85% 55%;        /* Lime focus rings */
+
+    /* Design tokens */
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --surface: 150 15% 7%;
+    --line: 150 10% 12%;
+    
+    /* Animation and effects */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-elevation: 0 8px 30px rgba(0, 0, 0, 0.3);
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
