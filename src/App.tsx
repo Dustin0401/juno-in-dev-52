@@ -11,6 +11,8 @@ import Chat from "./pages/Chat";
 import Portfolio from "./pages/Portfolio";
 import Settings from "./pages/Settings";
 import Team from "./pages/Team";
+import Voice from "./pages/Voice";
+import Tasks from "./pages/Tasks";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,12 @@ const App = () => (
             </Route>
             <Route path="/settings" element={<ChatLayout />}>
               <Route index element={<Settings />} />
+            </Route>
+            <Route path="/voice" element={<ChatLayout />}>
+              <Route index element={<Voice />} />
+            </Route>
+            <Route path="/tasks" element={<ChatLayout />}>
+              <Route index element={<Tasks />} />
             </Route>
             <Route path="/alerts" element={<ChatLayout />}>
               <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Alerts</h1><p className="text-muted">Coming soon...</p></div>} />

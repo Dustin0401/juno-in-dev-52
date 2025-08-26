@@ -7,7 +7,9 @@ import {
   MessageSquare, 
   Plus, 
   TrendingUp, 
-  Upload
+  Upload,
+  Mic,
+  Calendar
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Conversation } from '@/types'
@@ -77,6 +79,32 @@ export function ChatSidebar() {
         >
           <TrendingUp className="w-4 h-4" />
           Portfolio
+        </NavLink>
+
+        <NavLink
+          to="/voice"
+          className={({ isActive }) => cn(
+            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
+            isActive 
+              ? "bg-primary/10 text-primary" 
+              : "text-muted hover:bg-surface hover:text-foreground"
+          )}
+        >
+          <Mic className="w-4 h-4" />
+          Voice
+        </NavLink>
+
+        <NavLink
+          to="/tasks"
+          className={({ isActive }) => cn(
+            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
+            isActive 
+              ? "bg-primary/10 text-primary" 
+              : "text-muted hover:bg-surface hover:text-foreground"
+          )}
+        >
+          <Calendar className="w-4 h-4" />
+          Tasks
         </NavLink>
 
       </div>
