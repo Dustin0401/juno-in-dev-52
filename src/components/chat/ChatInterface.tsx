@@ -232,7 +232,7 @@ export function ChatInterface() {
                 onChange={(e) => handleInputChange(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Ask about any crypto asset, upload a chart, or use slash commands..."
-                className="min-h-[52px] max-h-40 resize-none pl-12 bg-background"
+                className="min-h-[60px] max-h-48 resize-none pl-12 bg-background"
                 disabled={isLoading}
               />
               
