@@ -5,6 +5,9 @@ import { Separator } from '@/components/ui/separator'
 import { Copy, Send, Plus, LogOut, Wallet } from 'lucide-react'
 import { useAccount, useDisconnect } from 'wagmi'
 import { useToast } from '@/hooks/use-toast'
+import { DepositModal } from './DepositModal'
+import { SendModal } from './SendModal'
+import { useState } from 'react'
 
 interface WalletModalProps {
   open: boolean
@@ -15,6 +18,8 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
   const { address } = useAccount()
   const { disconnect } = useDisconnect()
   const { toast } = useToast()
+  const [showDepositModal, setShowDepositModal] = useState(false)
+  const [showSendModal, setShowSendModal] = useState(false)
 
   // Mock token balances - would come from real API/blockchain
   const mockBalances = {
@@ -115,11 +120,19 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
 
           {/* Action Buttons */}
           <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" className="gap-2">
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => setShowDepositModal(true)}
+            >
               <Plus className="w-4 h-4" />
               Deposit
             </Button>
-            <Button variant="outline" className="gap-2">
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => setShowSendModal(true)}
+            >
               <Send className="w-4 h-4" />
               Send
             </Button>
@@ -138,6 +151,16 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
           </Button>
         </div>
       </DialogContent>
+
+      {/* Nested Modals */}
+      <DepositModal 
+        open={showDepositModal} 
+        onOpenChange={setShowDepositModal} 
+      />
+      <SendModal 
+        open={showSendModal} 
+        onOpenChange={setShowSendModal} 
+      />
     </Dialog>
   )
 }
