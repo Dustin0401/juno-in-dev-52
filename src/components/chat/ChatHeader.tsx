@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
-import { Menu, ChevronDown, Search, Bell, History, Settings } from 'lucide-react'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Menu, ChevronDown, Search, Bell, History, Settings, Bitcoin, Coins, Circle, Zap, Triangle, Hexagon, Diamond, Star, Square, Octagon } from 'lucide-react'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
@@ -25,6 +26,28 @@ const CRYPTOCURRENCIES = [
 ]
 
 const TIMEFRAMES = ['1h', '4h', '1d', '1w', '1M']
+
+// Crypto icon mapping
+const getCryptoIcon = (crypto: string) => {
+  const iconMap: Record<string, React.ReactNode> = {
+    'BTC': <Bitcoin className="w-4 h-4 text-orange-500" />,
+    'ETH': <Diamond className="w-4 h-4 text-blue-500" />,
+    'SOL': <Circle className="w-4 h-4 text-purple-500" />,
+    'AVAX': <Triangle className="w-4 h-4 text-red-500" />,
+    'MATIC': <Hexagon className="w-4 h-4 text-purple-600" />,
+    'ARB': <Circle className="w-4 h-4 text-blue-600" />,
+    'ADA': <Star className="w-4 h-4 text-blue-400" />,
+    'DOT': <Circle className="w-4 h-4 text-pink-500" />,
+    'LINK': <Zap className="w-4 h-4 text-blue-500" />,
+    'UNI': <Coins className="w-4 h-4 text-pink-400" />,
+    'DOGE': <Circle className="w-4 h-4 text-yellow-500" />,
+    'SHIB': <Triangle className="w-4 h-4 text-orange-400" />,
+    'LTC': <Square className="w-4 h-4 text-gray-400" />,
+    'XMR': <Octagon className="w-4 h-4 text-orange-600" />,
+  }
+  
+  return iconMap[crypto] || <Coins className="w-4 h-4 text-primary" />
+}
 
 export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
   const { address, isConnected } = useAccount()
@@ -60,26 +83,30 @@ export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
                 <ChevronDown className="w-3 h-3" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[250px] p-0" align="start">
+            <PopoverContent className="w-[250px] p-0 bg-surface/95 backdrop-blur-sm border-line shadow-elevation" align="start">
               <Command>
-                <CommandInput placeholder="Search cryptocurrencies..." className="h-9" />
-                <CommandList>
-                  <CommandEmpty>No cryptocurrency found.</CommandEmpty>
-                  <CommandGroup>
-                    {CRYPTOCURRENCIES.map((crypto) => (
-                      <CommandItem
-                        key={crypto}
-                        value={crypto}
-                        onSelect={(value) => {
-                          setSelectedCrypto(value.toUpperCase())
-                          setCryptoPopoverOpen(false)
-                        }}
-                      >
-                        {crypto}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
+                <CommandInput placeholder="Search cryptocurrencies..." className="h-9 border-none" />
+                <ScrollArea className="h-[300px] px-1">
+                  <CommandList className="max-h-none">
+                    <CommandEmpty>No cryptocurrency found.</CommandEmpty>
+                    <CommandGroup>
+                      {CRYPTOCURRENCIES.map((crypto) => (
+                        <CommandItem
+                          key={crypto}
+                          value={crypto}
+                          onSelect={(value) => {
+                            setSelectedCrypto(value.toUpperCase())
+                            setCryptoPopoverOpen(false)
+                          }}
+                          className="flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-md hover:bg-muted/50 transition-all duration-200 data-[selected=true]:bg-accent/20"
+                        >
+                          {getCryptoIcon(crypto)}
+                          <span className="font-medium">{crypto}</span>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </ScrollArea>
               </Command>
             </PopoverContent>
           </Popover>
