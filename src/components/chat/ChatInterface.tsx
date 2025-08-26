@@ -232,14 +232,14 @@ export function ChatInterface() {
                 onChange={(e) => handleInputChange(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Ask about any crypto asset, upload a chart, or use slash commands..."
-                className="min-h-[44px] max-h-32 resize-none pr-12 bg-background"
+                className="min-h-[52px] max-h-40 resize-none pl-12 bg-background"
                 disabled={isLoading}
               />
               
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-2 h-8 w-8"
+                className="absolute left-2 bottom-2 h-8 w-8 rounded-full bg-muted/50 hover:bg-muted"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <Paperclip className="w-4 h-4" />
