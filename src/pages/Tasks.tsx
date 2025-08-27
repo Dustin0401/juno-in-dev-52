@@ -149,7 +149,7 @@ export default function Tasks() {
       {/* Floating Create Task Button */}
       <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
         <DialogTrigger asChild>
-          <Button className="fixed top-6 right-6 gap-2 z-50 shadow-lg">
+          <Button className="fixed top-6 right-20 gap-2 z-50 shadow-lg">
             <Plus className="w-4 h-4" />
             Create Task
           </Button>
