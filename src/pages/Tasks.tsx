@@ -309,33 +309,6 @@ export default function Tasks() {
               })}
             </div>
 
-            {/* Recent Activity */}
-            <Card className="border-line bg-surface/50">
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-                <CardDescription>Latest task triggers and updates</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {[
-                    { time: '2 mins ago', action: 'BTC reached $44,500', type: 'price', status: 'triggered' },
-                    { time: '1 hour ago', action: 'Large ETH liquidation detected', type: 'liquidation', status: 'triggered' },
-                    { time: '3 hours ago', action: 'SOL news alert: New partnership', type: 'news', status: 'triggered' }
-                  ].map((activity, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-line">
-                      <div className="flex items-center gap-3">
-                        {getTaskIcon(activity.type)}
-                        <div>
-                          <div className="font-medium text-sm text-foreground">{activity.action}</div>
-                          <div className="text-xs text-muted">{activity.time}</div>
-                        </div>
-                      </div>
-                      {getStatusBadge(activity.status)}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </TabsContent>
 
           <TabsContent value="active" className="space-y-4 mt-6">
