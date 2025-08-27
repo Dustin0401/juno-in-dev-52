@@ -191,48 +191,8 @@ export default function Voice() {
           </Card>
         </div>
 
-        {/* Voice History Sidebar */}
+        {/* Voice Settings */}
         <div className="w-80 space-y-4">
-          <Card className="border-line bg-surface/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MessageCircle className="w-5 h-5 text-primary" />
-                Voice History
-              </CardTitle>
-              <CardDescription>Your recent voice conversations</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="h-96">
-                <div className="space-y-3">
-                  {mockSessions.map(session => <div key={session.id} className={cn("p-3 rounded-lg border cursor-pointer transition-all hover:bg-surface/80", currentSession === session.id ? "border-primary bg-primary/5" : "border-line bg-background/50")} onClick={() => setCurrentSession(session.id)}>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm text-foreground truncate">
-                            {session.title}
-                          </div>
-                          <div className="text-xs text-muted mt-1">
-                            {session.timestamp} • {session.duration}
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 ml-2">
-                          <Badge variant="outline" className={getSentimentColor(session.sentiment)}>
-                            {session.sentiment}
-                          </Badge>
-                          <Button size="sm" variant="ghost" onClick={e => {
-                        e.stopPropagation();
-                        setIsPlaying(!isPlaying);
-                      }} className="h-6 w-6 p-0">
-                            {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>)}
-                </div>
-              </ScrollArea>
-            </CardContent>
-          </Card>
-
-          {/* Voice Settings */}
           <Card className="border-line bg-surface/50">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
