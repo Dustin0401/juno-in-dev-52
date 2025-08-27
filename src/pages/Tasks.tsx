@@ -146,127 +146,113 @@ export default function Tasks() {
 
   return (
     <div className="h-full flex flex-col bg-background">
-      {/* Header */}
-      <div className="border-b border-line bg-surface/30 p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20">
-              <Calendar className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">AI Task Manager</h1>
-              <p className="text-muted">Set up intelligent alerts and automation for crypto markets</p>
-            </div>
-          </div>
+      {/* Floating Create Task Button */}
+      <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+        <DialogTrigger asChild>
+          <Button className="fixed top-6 right-6 gap-2 z-50 shadow-lg">
+            <Plus className="w-4 h-4" />
+            Create Task
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Create New Task</DialogTitle>
+            <DialogDescription>
+              Set up an AI-powered task to monitor crypto markets
+            </DialogDescription>
+          </DialogHeader>
           
-          <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
-            <DialogTrigger asChild>
-              <Button className="gap-2">
-                <Plus className="w-4 h-4" />
-                Create Task
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle>Create New Task</DialogTitle>
-                <DialogDescription>
-                  Set up an AI-powered task to monitor crypto markets
-                </DialogDescription>
-              </DialogHeader>
-              
-              <div className="space-y-4">
+          <div className="space-y-4">
+            <div>
+              <Label>Task Type</Label>
+              <Select value={selectedTaskType} onValueChange={setSelectedTaskType}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select task type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {taskTypes.map((type) => {
+                    const Icon = type.icon
+                    return (
+                      <SelectItem key={type.type} value={type.type}>
+                        <div className="flex items-center gap-2">
+                          <Icon className={cn("w-4 h-4", type.color)} />
+                          {type.title}
+                        </div>
+                      </SelectItem>
+                    )
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {selectedTaskType === 'price' && (
+              <>
                 <div>
-                  <Label>Task Type</Label>
-                  <Select value={selectedTaskType} onValueChange={setSelectedTaskType}>
+                  <Label>Asset</Label>
+                  <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select task type" />
+                      <SelectValue placeholder="Select cryptocurrency" />
                     </SelectTrigger>
                     <SelectContent>
-                      {taskTypes.map((type) => {
-                        const Icon = type.icon
-                        return (
-                          <SelectItem key={type.type} value={type.type}>
-                            <div className="flex items-center gap-2">
-                              <Icon className={cn("w-4 h-4", type.color)} />
-                              {type.title}
-                            </div>
-                          </SelectItem>
-                        )
-                      })}
+                      <SelectItem value="BTC">Bitcoin (BTC)</SelectItem>
+                      <SelectItem value="ETH">Ethereum (ETH)</SelectItem>
+                      <SelectItem value="SOL">Solana (SOL)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
+                <div>
+                  <Label>Target Price ($)</Label>
+                  <Input type="number" placeholder="Enter target price" />
+                </div>
+                <div>
+                  <Label>Condition</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Price condition" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="above">Above target</SelectItem>
+                      <SelectItem value="below">Below target</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </>
+            )}
 
-                {selectedTaskType === 'price' && (
-                  <>
-                    <div>
-                      <Label>Asset</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select cryptocurrency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="BTC">Bitcoin (BTC)</SelectItem>
-                          <SelectItem value="ETH">Ethereum (ETH)</SelectItem>
-                          <SelectItem value="SOL">Solana (SOL)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Label>Target Price ($)</Label>
-                      <Input type="number" placeholder="Enter target price" />
-                    </div>
-                    <div>
-                      <Label>Condition</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Price condition" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="above">Above target</SelectItem>
-                          <SelectItem value="below">Below target</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </>
-                )}
+            {selectedTaskType === 'news' && (
+              <>
+                <div>
+                  <Label>Keywords (comma-separated)</Label>
+                  <Input placeholder="e.g., upgrade, partnership, regulation" />
+                </div>
+                <div>
+                  <Label>Asset Focus</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select asset or market" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="general">General Market</SelectItem>
+                      <SelectItem value="BTC">Bitcoin</SelectItem>
+                      <SelectItem value="ETH">Ethereum</SelectItem>
+                      <SelectItem value="SOL">Solana</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </>
+            )}
+          </div>
 
-                {selectedTaskType === 'news' && (
-                  <>
-                    <div>
-                      <Label>Keywords (comma-separated)</Label>
-                      <Input placeholder="e.g., upgrade, partnership, regulation" />
-                    </div>
-                    <div>
-                      <Label>Asset Focus</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select asset or market" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="general">General Market</SelectItem>
-                          <SelectItem value="BTC">Bitcoin</SelectItem>
-                          <SelectItem value="ETH">Ethereum</SelectItem>
-                          <SelectItem value="SOL">Solana</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsCreateModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={() => setIsCreateModalOpen(false)}>
-                  Create Task
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCreateModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => setIsCreateModalOpen(false)}>
+              Create Task
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div className="flex-1 p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
