@@ -95,65 +95,64 @@ export default function Voice() {
       <div className="flex-1 flex gap-6 p-6">
         {/* Main Voice Interface */}
         <div className="flex-1 space-y-6">
-          {/* Voice Control Card */}
-          <Card className="border-line bg-surface/50 backdrop-blur-sm">
-            <CardHeader className="text-center pb-4">
-              <CardTitle className="flex items-center justify-center gap-2">
-                <Brain className="w-5 h-5 text-primary" />
+          {/* Voice Control - Direct on Canvas */}
+          <div className="text-center space-y-6 py-8">
+            <div className="mb-6">
+              <h1 className="flex items-center justify-center gap-2 text-2xl font-bold text-foreground mb-2">
+                <Brain className="w-6 h-6 text-primary" />
                 Juno AI Voice Assistant
-              </CardTitle>
-              <CardDescription>
+              </h1>
+              <p className="text-muted text-lg">
                 Ask about any cryptocurrency, market trends, or trading strategies
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-center space-y-6">
-              {/* Voice Visualizer */}
-              <div className="relative">
-                <div className={cn("w-32 h-32 mx-auto rounded-full border-4 transition-all duration-300 flex items-center justify-center", isRecording ? "border-primary bg-primary/10 shadow-lg shadow-primary/20" : "border-line bg-surface/50")}>
-                  {isRecording ? <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => <div key={i} className="w-1 bg-primary rounded-full animate-pulse" style={{
-                    height: `${Math.random() * 20 + 10}px`,
-                    animationDelay: `${i * 0.1}s`
-                  }} />)}
-                    </div> : <Mic className="w-8 h-8 text-muted" />}
-                </div>
-                
-                {/* Audio Level Ring */}
-                {isRecording && <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping" style={{
-                scale: 1 + audioLevel / 200,
-                opacity: 0.6 - audioLevel / 200
-              }} />}
-              </div>
+              </p>
+            </div>
 
-              {/* Recording Controls */}
-              <div className="space-y-4">
-                {isRecording && <div className="space-y-2">
-                    <div className="text-sm text-muted">Recording: {formatTime(recordingTime)}</div>
-                    <Progress value={audioLevel} className="w-48 mx-auto h-2" />
-                  </div>}
-
-                <Button size="lg" variant={isRecording ? "destructive" : "hero"} onClick={() => setIsRecording(!isRecording)} className="w-48 h-12">
-                  {isRecording ? <>
-                      <MicOff className="w-5 h-5 mr-2" />
-                      Stop Recording
-                    </> : <>
-                      <Mic className="w-5 h-5 mr-2" />
-                      Start Voice Chat
-                    </>}
-                </Button>
+            {/* Voice Visualizer */}
+            <div className="relative">
+              <div className={cn("w-32 h-32 mx-auto rounded-full border-4 transition-all duration-300 flex items-center justify-center", isRecording ? "border-primary bg-primary/10 shadow-lg shadow-primary/20" : "border-line bg-surface/50")}>
+                {isRecording ? <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => <div key={i} className="w-1 bg-primary rounded-full animate-pulse" style={{
+                  height: `${Math.random() * 20 + 10}px`,
+                  animationDelay: `${i * 0.1}s`
+                }} />)}
+                  </div> : <Mic className="w-8 h-8 text-muted" />}
               </div>
+              
+              {/* Audio Level Ring */}
+              {isRecording && <div className="absolute inset-0 rounded-full border-2 border-primary animate-ping" style={{
+              scale: 1 + audioLevel / 200,
+              opacity: 0.6 - audioLevel / 200
+            }} />}
+            </div>
 
-              {/* Quick Prompts */}
-              <div className="pt-4">
-                <p className="text-sm text-muted mb-3">Try asking:</p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {["What's BTC doing today?", "Should I buy ETH now?", "Analyze SOL trends", "Market sentiment overview"].map(prompt => <Badge key={prompt} variant="secondary" className="cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors">
-                      "{prompt}"
-                    </Badge>)}
-                </div>
+            {/* Recording Controls */}
+            <div className="space-y-4">
+              {isRecording && <div className="space-y-2">
+                  <div className="text-sm text-muted">Recording: {formatTime(recordingTime)}</div>
+                  <Progress value={audioLevel} className="w-48 mx-auto h-2" />
+                </div>}
+
+              <Button size="lg" variant={isRecording ? "destructive" : "hero"} onClick={() => setIsRecording(!isRecording)} className="w-48 h-12">
+                {isRecording ? <>
+                    <MicOff className="w-5 h-5 mr-2" />
+                    Stop Recording
+                  </> : <>
+                    <Mic className="w-5 h-5 mr-2" />
+                    Start Voice Chat
+                  </>}
+              </Button>
+            </div>
+
+            {/* Quick Prompts */}
+            <div className="pt-4">
+              <p className="text-sm text-muted mb-3">Try asking:</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {["What's BTC doing today?", "Should I buy ETH now?", "Analyze SOL trends", "Market sentiment overview"].map(prompt => <Badge key={prompt} variant="secondary" className="cursor-pointer hover:bg-primary/10 hover:text-primary transition-colors">
+                    "{prompt}"
+                  </Badge>)}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Live Market Insights */}
           <Card className="border-line bg-surface/50">
