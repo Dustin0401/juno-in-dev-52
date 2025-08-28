@@ -6,6 +6,8 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Mic, MicOff, Play, Pause, Volume2, TrendingUp, TrendingDown, Zap, Brain, MessageCircle, Waves } from 'lucide-react';
+import { WalletModal } from '@/components/chat/WalletModal';
+import profileAvatar from '@/assets/profile-avatar.png';
 import { cn } from '@/lib/utils';
 interface VoiceSession {
   id: string;
@@ -43,6 +45,7 @@ export default function Voice() {
   const [audioLevel, setAudioLevel] = useState(0);
   const [currentSession, setCurrentSession] = useState<string | null>(null);
   const [recordingTime, setRecordingTime] = useState(0);
+  const [walletModalOpen, setWalletModalOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout>();
   useEffect(() => {
     if (isRecording) {
@@ -89,7 +92,25 @@ export default function Voice() {
     }
   };
   return <div className="h-full flex flex-col bg-background">
-      {/* Header */}
+      {/* Profile Avatar */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setWalletModalOpen(true)}
+        className="fixed top-4 right-4 z-50 p-1 rounded-full hover:bg-surface"
+      >
+        <img 
+          src={profileAvatar} 
+          alt="Profile" 
+          className="w-8 h-8 rounded-full"
+        />
+      </Button>
+
+      {/* Wallet Modal */}
+      <WalletModal 
+        open={walletModalOpen} 
+        onOpenChange={setWalletModalOpen} 
+      />
       
 
       <div className="flex-1 flex gap-6 p-6">

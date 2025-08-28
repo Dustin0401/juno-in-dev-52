@@ -28,6 +28,8 @@ import {
   Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { WalletModal } from '@/components/chat/WalletModal'
+import profileAvatar from '@/assets/profile-avatar.png'
 
 interface Task {
   id: string
@@ -114,6 +116,7 @@ export default function Tasks() {
   const [activeTab, setActiveTab] = useState('overview')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [selectedTaskType, setSelectedTaskType] = useState<string>('')
+  const [walletModalOpen, setWalletModalOpen] = useState(false)
 
   const getTaskIcon = (type: string) => {
     const taskType = taskTypes.find(t => t.type === type)
@@ -146,6 +149,26 @@ export default function Tasks() {
 
   return (
     <div className="h-full flex flex-col bg-background">
+      {/* Profile Avatar */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setWalletModalOpen(true)}
+        className="fixed top-4 right-4 z-50 p-1 rounded-full hover:bg-surface"
+      >
+        <img 
+          src={profileAvatar} 
+          alt="Profile" 
+          className="w-8 h-8 rounded-full"
+        />
+      </Button>
+
+      {/* Wallet Modal */}
+      <WalletModal 
+        open={walletModalOpen} 
+        onOpenChange={setWalletModalOpen} 
+      />
+
       {/* Floating Create Task Button */}
       <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
         <DialogTrigger asChild>
