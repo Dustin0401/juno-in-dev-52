@@ -28,9 +28,6 @@ import {
   Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { WalletModal } from '@/components/chat/WalletModal'
-import { useAccount } from 'wagmi'
-import profileAvatar from '@/assets/profile-avatar.png'
 
 interface Task {
   id: string
@@ -113,9 +110,6 @@ const taskTypes = [
 ]
 
 export default function Tasks() {
-  const { isConnected } = useAccount()
-  const [walletModalOpen, setWalletModalOpen] = useState(false)
-  const mockStakingTier = 'analyst'
   const [tasks, setTasks] = useState<Task[]>(mockTasks)
   const [activeTab, setActiveTab] = useState('overview')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -152,35 +146,10 @@ export default function Tasks() {
 
   return (
     <div className="h-full flex flex-col bg-background">
-      {/* Profile Avatar - Direct on Canvas */}
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
-        {isConnected && (
-          <Badge variant="secondary" className="capitalize">
-            {mockStakingTier}
-          </Badge>
-        )}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setWalletModalOpen(true)}
-          className="p-1 rounded-full hover:bg-surface"
-        >
-          <img 
-            src={profileAvatar} 
-            alt="Profile" 
-            className="w-8 h-8 rounded-full"
-          />
-        </Button>
-        <WalletModal 
-          open={walletModalOpen} 
-          onOpenChange={setWalletModalOpen} 
-        />
-      </div>
-
       {/* Floating Create Task Button */}
       <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
         <DialogTrigger asChild>
-          <Button className="fixed top-6 right-20 gap-2 z-40 shadow-lg">
+          <Button className="fixed top-6 right-20 gap-2 z-50 shadow-lg">
             <Plus className="w-4 h-4" />
             Create Task
           </Button>
