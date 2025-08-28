@@ -5,6 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TrendingUp, DollarSign, Activity, Target, BarChart3, AlertTriangle } from 'lucide-react';
+import { WalletModal } from '@/components/chat/WalletModal';
+import { useAccount } from 'wagmi';
+import profileAvatar from '@/assets/profile-avatar.png';
 
 // Mock portfolio data
 const mockPortfolioData = {
@@ -41,16 +44,43 @@ const mockPortfolioData = {
   }
 };
 export default function Portfolio() {
+  const { isConnected } = useAccount();
+  const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const mockStakingTier = 'analyst';
+
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
   }).format(value);
   const formatPercent = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
+  
   return <div className="h-full p-6 bg-background">
+      {/* Profile Avatar - Direct on Canvas */}
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+        {isConnected && (
+          <Badge variant="secondary" className="capitalize">
+            {mockStakingTier}
+          </Badge>
+        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setWalletModalOpen(true)}
+          className="p-1 rounded-full hover:bg-surface"
+        >
+          <img 
+            src={profileAvatar} 
+            alt="Profile" 
+            className="w-8 h-8 rounded-full"
+          />
+        </Button>
+        <WalletModal 
+          open={walletModalOpen} 
+          onOpenChange={setWalletModalOpen} 
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          
-        </div>
 
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

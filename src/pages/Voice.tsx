@@ -7,6 +7,9 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Mic, MicOff, Play, Pause, Volume2, TrendingUp, TrendingDown, Zap, Brain, MessageCircle, Waves } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { WalletModal } from '@/components/chat/WalletModal';
+import { useAccount } from 'wagmi';
+import profileAvatar from '@/assets/profile-avatar.png';
 interface VoiceSession {
   id: string;
   title: string;
@@ -38,6 +41,9 @@ const mockSessions: VoiceSession[] = [{
   sentiment: 'bearish'
 }];
 export default function Voice() {
+  const { isConnected } = useAccount();
+  const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const mockStakingTier = 'analyst';
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioLevel, setAudioLevel] = useState(0);
@@ -89,8 +95,30 @@ export default function Voice() {
     }
   };
   return <div className="h-full flex flex-col bg-background">
-      {/* Header */}
-      
+      {/* Profile Avatar - Direct on Canvas */}
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+        {isConnected && (
+          <Badge variant="secondary" className="capitalize">
+            {mockStakingTier}
+          </Badge>
+        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setWalletModalOpen(true)}
+          className="p-1 rounded-full hover:bg-surface"
+        >
+          <img 
+            src={profileAvatar} 
+            alt="Profile" 
+            className="w-8 h-8 rounded-full"
+          />
+        </Button>
+        <WalletModal 
+          open={walletModalOpen} 
+          onOpenChange={setWalletModalOpen} 
+        />
+      </div>
 
       <div className="flex-1 flex gap-6 p-6">
         {/* Main Voice Interface */}
