@@ -50,23 +50,185 @@ const getCryptoIcon = (crypto: string) => {
 }
 
 export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
+  const { address, isConnected } = useAccount()
+  const [selectedCrypto, setSelectedCrypto] = useState('BTC')
+  const [selectedTimeframe, setSelectedTimeframe] = useState('1d')
   const [walletModalOpen, setWalletModalOpen] = useState(false)
+  const location = useLocation()
 
   return (
     <>
-      {/* Profile Avatar */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setWalletModalOpen(true)}
-        className="fixed top-4 right-4 z-50 p-1 rounded-full hover:bg-surface"
-      >
-        <img 
-          src={profileAvatar} 
-          alt="Profile" 
-          className="w-8 h-8 rounded-full"
-        />
-      </Button>
+      <header className="h-16 border-b border-line bg-surface/50 backdrop-blur-sm flex items-center justify-between px-4">
+        {/* Left Section */}
+        <div className="flex items-center gap-4">
+          {/* Sidebar Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggleSidebar}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <Menu className="w-5 h-5" />
+          </Button>
+
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center gap-1">
+            <NavLink to="/portfolio">
+              {({ isActive }) => (
+                <Button 
+                  variant={isActive ? "secondary" : "ghost"} 
+                  size="sm"
+                  className="text-sm"
+                >
+                  Portfolio
+                </Button>
+              )}
+            </NavLink>
+            <NavLink to="/chat">
+              {({ isActive }) => (
+                <Button 
+                  variant={isActive ? "secondary" : "ghost"} 
+                  size="sm"
+                  className="text-sm"
+                >
+                  Chat
+                </Button>
+              )}
+            </NavLink>
+            <NavLink to="/voice">
+              {({ isActive }) => (
+                <Button 
+                  variant={isActive ? "secondary" : "ghost"} 
+                  size="sm"
+                  className="text-sm"
+                >
+                  Voice
+                </Button>
+              )}
+            </NavLink>
+            <NavLink to="/tasks">
+              {({ isActive }) => (
+                <Button 
+                  variant={isActive ? "secondary" : "ghost"} 
+                  size="sm"
+                  className="text-sm"
+                >
+                  Tasks
+                </Button>
+              )}
+            </NavLink>
+            <NavLink to="/team">
+              {({ isActive }) => (
+                <Button 
+                  variant={isActive ? "secondary" : "ghost"} 
+                  size="sm"
+                  className="text-sm"
+                >
+                  Team
+                </Button>
+              )}
+            </NavLink>
+            <NavLink to="/settings">
+              {({ isActive }) => (
+                <Button 
+                  variant={isActive ? "secondary" : "ghost"} 
+                  size="sm"
+                  className="text-sm"
+                >
+                  <Settings className="w-4 h-4" />
+                </Button>
+              )}
+            </NavLink>
+          </nav>
+        </div>
+
+        {/* Center Section - Market Selector */}
+        <div className="hidden lg:flex items-center gap-2">
+          {/* Crypto Selector */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="min-w-[120px] justify-between bg-surface border-line"
+              >
+                <div className="flex items-center gap-2">
+                  {getCryptoIcon(selectedCrypto)}
+                  <span className="font-medium">{selectedCrypto}</span>
+                </div>
+                <ChevronDown className="w-3 h-3 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-0 bg-surface border-line" align="start">
+              <Command>
+                <CommandInput placeholder="Search crypto..." />
+                <CommandEmpty>No cryptocurrency found.</CommandEmpty>
+                <CommandList>
+                  <ScrollArea className="h-64">
+                    <CommandGroup>
+                      {CRYPTOCURRENCIES.map((crypto) => (
+                        <CommandItem
+                          key={crypto}
+                          value={crypto}
+                          onSelect={() => setSelectedCrypto(crypto)}
+                          className="hover:bg-accent"
+                        >
+                          <div className="flex items-center gap-2">
+                            {getCryptoIcon(crypto)}
+                            <span>{crypto}</span>
+                          </div>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </ScrollArea>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+          {/* Timeframe Selector */}
+          <div className="flex items-center gap-1 bg-surface border border-line rounded-md p-1">
+            {TIMEFRAMES.map((timeframe) => (
+              <Button
+                key={timeframe}
+                variant={selectedTimeframe === timeframe ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setSelectedTimeframe(timeframe)}
+                className="text-xs px-2 py-1 h-7"
+              >
+                {timeframe}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+            <Search className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+            <Bell className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+            <History className="w-4 h-4" />
+          </Button>
+          
+          {/* Profile Avatar */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setWalletModalOpen(true)}
+            className="p-1 rounded-full hover:bg-accent"
+          >
+            <img 
+              src={profileAvatar} 
+              alt="Profile" 
+              className="w-8 h-8 rounded-full"
+            />
+          </Button>
+        </div>
+      </header>
 
       {/* Wallet Modal */}
       <WalletModal 
