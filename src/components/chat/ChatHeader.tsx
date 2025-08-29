@@ -3,11 +3,12 @@ import { Badge } from '@/components/ui/badge'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Menu, ChevronDown, Bell, History, Settings, Bitcoin, Coins, Circle, Zap, Triangle, Hexagon, Diamond, Star, Square, Octagon } from 'lucide-react'
+import { Menu, ChevronDown, History, Settings, Bitcoin, Coins, Circle, Zap, Triangle, Hexagon, Diamond, Star, Square, Octagon, BarChart3 } from 'lucide-react'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { WalletModal } from './WalletModal'
+import { AlertsDropdown } from '@/components/alerts/AlertsDropdown'
 import profileAvatar from '@/assets/profile-avatar.png'
 
 interface ChatHeaderProps {
@@ -140,8 +141,11 @@ export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
               <Settings className="w-4 h-4" />
             </NavLink>
           </Button>
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-            <Bell className="w-4 h-4" />
+          <AlertsDropdown />
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+            <NavLink to="/backtest">
+              <BarChart3 className="w-4 h-4" />
+            </NavLink>
           </Button>
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             <History className="w-4 h-4" />

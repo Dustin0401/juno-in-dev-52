@@ -42,6 +42,14 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 150 15% 85%;
 
+    /* Warning */
+    --warning: 45 93% 47%;
+    --warning-foreground: 150 20% 4%;
+
+    /* Success */
+    --success: 142 76% 36%;
+    --success-foreground: 150 15% 85%;
+
     /* Borders and inputs */
     --border: 150 10% 12%;     /* Subtle line #1A2019 */
     --input: 150 10% 12%;
