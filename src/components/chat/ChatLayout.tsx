@@ -1,11 +1,15 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { ChatSidebar } from './ChatSidebar'
 import { ChatHeader } from './ChatHeader'
 import { cn } from '@/lib/utils'
 
 export function ChatLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const location = useLocation()
+  
+  // Only show header on chat routes
+  const isChatRoute = location.pathname.startsWith('/chat')
 
   return (
     <div className="h-screen flex bg-background">
@@ -19,10 +23,12 @@ export function ChatLayout() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
-        <ChatHeader 
-          sidebarOpen={sidebarOpen}
-          onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-        />
+        {isChatRoute && (
+          <ChatHeader 
+            sidebarOpen={sidebarOpen}
+            onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          />
+        )}
         
         <main className="flex-1 overflow-hidden">
           <Outlet />
