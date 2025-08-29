@@ -66,12 +66,6 @@ export function ChatSidebar() {
 
         
 
-        <NavLink to="/settings" className={({
-        isActive
-      }) => cn("flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors", isActive ? "bg-primary/10 text-primary" : "text-muted hover:bg-surface hover:text-foreground")}>
-          <Settings className="w-4 h-4" />
-          Settings
-        </NavLink>
 
       </div>
 

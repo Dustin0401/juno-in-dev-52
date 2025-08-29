@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Menu, ChevronDown, Search, Bell, History, Settings, Bitcoin, Coins, Circle, Zap, Triangle, Hexagon, Diamond, Star, Square, Octagon } from 'lucide-react'
+import { Menu, ChevronDown, Bell, History, Settings, Bitcoin, Coins, Circle, Zap, Triangle, Hexagon, Diamond, Star, Square, Octagon } from 'lucide-react'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
@@ -135,8 +135,10 @@ export function ChatHeader({ sidebarOpen, onToggleSidebar }: ChatHeaderProps) {
 
         {/* Right Section */}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-            <Search className="w-4 h-4" />
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+            <NavLink to="/settings">
+              <Settings className="w-4 h-4" />
+            </NavLink>
           </Button>
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             <Bell className="w-4 h-4" />
