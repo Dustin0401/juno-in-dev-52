@@ -7,7 +7,6 @@ import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { Coins, Crown, Zap, Users } from 'lucide-react'
 import { ApiKeySettings } from '@/components/settings/ApiKeySettings'
-import profileAvatar from '@/assets/profile-avatar.png'
 
 export default function Settings() {
   const mockStaking = {
@@ -19,16 +18,6 @@ export default function Settings() {
 
   return (
     <div className="h-full p-6 max-w-4xl mx-auto">
-      {/* Profile Avatar - Fixed Position */}
-      <div className="fixed top-4 right-4 z-50">
-        <img 
-          src={profileAvatar} 
-          alt="Profile" 
-          className="w-10 h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all"
-        />
-      </div>
-      
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
 
       <Tabs defaultValue="general" className="space-y-6">
         <TabsList className="grid w-full grid-cols-3">

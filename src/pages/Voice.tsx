@@ -6,8 +6,6 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Mic, MicOff, Play, Pause, Volume2, TrendingUp, TrendingDown, Zap, Brain, MessageCircle, Waves } from 'lucide-react';
-import { WalletModal } from '@/components/chat/WalletModal';
-import profileAvatar from '@/assets/profile-avatar.png';
 import { cn } from '@/lib/utils';
 interface VoiceSession {
   id: string;
@@ -91,28 +89,8 @@ export default function Voice() {
         return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
     }
   };
-  return <div className="h-full flex flex-col bg-background">
-      {/* Profile Avatar */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setWalletModalOpen(true)}
-        className="fixed top-4 right-4 z-50 p-1 rounded-full hover:bg-surface"
-      >
-        <img 
-          src={profileAvatar} 
-          alt="Profile" 
-          className="w-8 h-8 rounded-full"
-        />
-      </Button>
-
-      {/* Wallet Modal */}
-      <WalletModal 
-        open={walletModalOpen} 
-        onOpenChange={setWalletModalOpen} 
-      />
-      
-
+  return (
+    <div className="h-full flex flex-col bg-background">
       <div className="flex-1 flex gap-6 p-6">
         {/* Main Voice Interface */}
         <div className="flex-1 space-y-6">
@@ -244,5 +222,6 @@ export default function Voice() {
           </Card>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }

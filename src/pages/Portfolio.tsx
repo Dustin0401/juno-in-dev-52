@@ -46,11 +46,10 @@ export default function Portfolio() {
     currency: 'USD'
   }).format(value);
   const formatPercent = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
-  return <div className="h-full p-6 bg-background">
+  
+  return (
+    <div className="h-full p-6 bg-background">
       <div className="max-w-7xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          
-        </div>
 
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -97,5 +96,6 @@ export default function Portfolio() {
           </CardContent>
         </Card>
       </div>
-    </div>;
+    </div>
+  );
 }
