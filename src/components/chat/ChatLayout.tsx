@@ -16,7 +16,7 @@ export function ChatLayout() {
       {/* Sidebar */}
       <div className={cn(
         "transition-all duration-300 border-r border-line bg-surface/30",
-        sidebarOpen ? "w-80" : "w-0 overflow-hidden"
+        sidebarOpen ? "w-72" : "w-0 overflow-hidden"
       )}>
         <ChatSidebar />
       </div>
