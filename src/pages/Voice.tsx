@@ -44,6 +44,11 @@ export default function Voice() {
   const [currentSession, setCurrentSession] = useState<string | null>(null);
   const [recordingTime, setRecordingTime] = useState(0);
   const [walletModalOpen, setWalletModalOpen] = useState(false);
+  // Voice settings states
+  const [speechSpeed, setSpeechSpeed] = useState(1.0);
+  const [volume, setVolume] = useState(1.0);
+  const [autoTranscription, setAutoTranscription] = useState(true);
+  const [voiceActivation, setVoiceActivation] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout>();
   useEffect(() => {
     if (isRecording) {
@@ -88,6 +93,26 @@ export default function Voice() {
       default:
         return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
     }
+  };
+
+  // Voice settings handlers
+  const handleSpeedChange = () => {
+    const speeds = [0.5, 0.75, 1.0, 1.25, 1.5];
+    const currentIndex = speeds.indexOf(speechSpeed);
+    const nextIndex = (currentIndex + 1) % speeds.length;
+    setSpeechSpeed(speeds[nextIndex]);
+  };
+
+  const handleVolumeToggle = () => {
+    setVolume(volume === 0 ? 1.0 : 0);
+  };
+
+  const handleTranscriptionToggle = () => {
+    setAutoTranscription(!autoTranscription);
+  };
+
+  const handleVoiceActivationToggle = () => {
+    setVoiceActivation(!voiceActivation);
   };
   return (
     <div className="h-full flex flex-col bg-background">
@@ -156,35 +181,58 @@ export default function Voice() {
             <div className="pt-6">
               <div className="flex items-center justify-center gap-8">
                 {/* Speech Speed */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
+                <div className="flex flex-col items-center gap-2 group cursor-pointer" onClick={handleSpeedChange}>
+                  <div className={cn("w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-200", 
+                    "bg-surface/50 border-line hover:bg-primary/10 hover:border-primary/30"
+                  )}>
                     <Gauge className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
                   </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Speed</span>
+                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">
+                    {speechSpeed}x
+                  </span>
                 </div>
 
                 {/* Voice Volume */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <Volume2 className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
+                <div className="flex flex-col items-center gap-2 group cursor-pointer" onClick={handleVolumeToggle}>
+                  <div className={cn("w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-200",
+                    volume === 0 ? "bg-red-500/10 border-red-500/30" : "bg-surface/50 border-line hover:bg-primary/10 hover:border-primary/30"
+                  )}>
+                    {volume === 0 ? 
+                      <VolumeX className="w-5 h-5 text-red-500" /> : 
+                      <Volume2 className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
+                    }
                   </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Volume</span>
+                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">
+                    {volume === 0 ? 'Muted' : 'Volume'}
+                  </span>
                 </div>
 
                 {/* Auto-transcription */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <FileText className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
+                <div className="flex flex-col items-center gap-2 group cursor-pointer" onClick={handleTranscriptionToggle}>
+                  <div className={cn("w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-200",
+                    autoTranscription ? "bg-primary/10 border-primary/30" : "bg-surface/50 border-line hover:bg-primary/10 hover:border-primary/30"
+                  )}>
+                    <FileText className={cn("w-5 h-5 transition-colors", 
+                      autoTranscription ? "text-primary" : "text-muted group-hover:text-primary"
+                    )} />
                   </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Transcription</span>
+                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">
+                    {autoTranscription ? 'On' : 'Off'}
+                  </span>
                 </div>
 
                 {/* Voice Activation */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <MicIcon className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
+                <div className="flex flex-col items-center gap-2 group cursor-pointer" onClick={handleVoiceActivationToggle}>
+                  <div className={cn("w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-200",
+                    voiceActivation ? "bg-primary/10 border-primary/30" : "bg-surface/50 border-line hover:bg-primary/10 hover:border-primary/30"
+                  )}>
+                    <MicIcon className={cn("w-5 h-5 transition-colors",
+                      voiceActivation ? "text-primary" : "text-muted group-hover:text-primary"
+                    )} />
                   </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Activation</span>
+                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">
+                    {voiceActivation ? 'Active' : 'Manual'}
+                  </span>
                 </div>
               </div>
             </div>
