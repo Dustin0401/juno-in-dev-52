@@ -16,27 +16,27 @@ interface OutputNodeProps {
 
 export const OutputNode = memo(({ data, id }: OutputNodeProps) => {
   return (
-    <div className="bg-surface border-2 border-success/50 rounded-lg p-3 min-w-[160px] shadow-lg">
+    <div className="bg-surface border-2 border-success/50 rounded-lg p-2.5 min-w-[140px] max-w-[160px] shadow-lg">
       <Handle
         type="target"
         position={Position.Left}
         className="w-3 h-3 bg-success border-2 border-background"
       />
       
-      <div className="flex items-center gap-2 mb-2">
-        <BarChart3 className="w-4 h-4 text-success" />
-        <span className="font-semibold text-sm text-foreground">{data.label}</span>
+      <div className="flex items-center gap-2 mb-1.5">
+        <BarChart3 className="w-3.5 h-3.5 text-success" />
+        <span className="font-semibold text-xs text-foreground truncate">{data.label}</span>
       </div>
       
-      <div className="flex items-center gap-2 mb-3">
-        <Badge variant="outline" className="text-xs">
+      <div className="flex items-center gap-2 mb-2.5">
+        <Badge variant="outline" className="text-xs px-1.5 py-0.5">
           {data.outputType.replace('_', ' ').toUpperCase()}
         </Badge>
       </div>
       
       <div className="flex justify-end">
-        <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-          <Settings className="w-3 h-3" />
+        <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
+          <Settings className="w-2.5 h-2.5" />
         </Button>
       </div>
     </div>

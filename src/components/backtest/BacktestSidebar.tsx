@@ -40,13 +40,37 @@ const nodeCategories: NodeCategory[] = [
       {
         id: 'price-data',
         name: 'Price Data',
-        description: 'OHLCV price data',
+        description: 'OHLCV candlestick data',
         type: 'dataSource'
       },
       {
         id: 'volume-data',
         name: 'Volume Data',
-        description: 'Trading volume data',
+        description: 'Trading volume analytics',
+        type: 'dataSource'
+      },
+      {
+        id: 'orderbook-data',
+        name: 'Order Book',
+        description: 'Bid/ask depth data',
+        type: 'dataSource'
+      },
+      {
+        id: 'sentiment-data',
+        name: 'Market Sentiment',
+        description: 'Fear & greed index',
+        type: 'dataSource'
+      },
+      {
+        id: 'news-data',
+        name: 'News Feed',
+        description: 'Market news & events',
+        type: 'dataSource'
+      },
+      {
+        id: 'social-data',
+        name: 'Social Metrics',
+        description: 'Twitter/Reddit sentiment',
         type: 'dataSource'
       }
     ]
@@ -58,26 +82,74 @@ const nodeCategories: NodeCategory[] = [
     items: [
       {
         id: 'sma',
-        name: 'Simple Moving Average',
-        description: 'SMA indicator',
+        name: 'Simple MA',
+        description: 'Simple moving average',
         type: 'indicator'
       },
       {
         id: 'ema',
-        name: 'Exponential Moving Average',
-        description: 'EMA indicator',
+        name: 'Exponential MA',
+        description: 'Exponential moving average',
         type: 'indicator'
       },
       {
         id: 'rsi',
         name: 'RSI',
-        description: 'Relative Strength Index',
+        description: 'Relative strength index',
         type: 'indicator'
       },
       {
         id: 'macd',
         name: 'MACD',
-        description: 'Moving Average Convergence Divergence',
+        description: 'Moving avg convergence',
+        type: 'indicator'
+      },
+      {
+        id: 'bollinger',
+        name: 'Bollinger Bands',
+        description: 'Volatility bands',
+        type: 'indicator'
+      },
+      {
+        id: 'stochastic',
+        name: 'Stochastic',
+        description: 'Momentum oscillator',
+        type: 'indicator'
+      },
+      {
+        id: 'atr',
+        name: 'ATR',
+        description: 'Average true range',
+        type: 'indicator'
+      },
+      {
+        id: 'adx',
+        name: 'ADX',
+        description: 'Trend strength',
+        type: 'indicator'
+      },
+      {
+        id: 'cci',
+        name: 'CCI',
+        description: 'Commodity channel index',
+        type: 'indicator'
+      },
+      {
+        id: 'williams-r',
+        name: 'Williams %R',
+        description: 'Williams percent range',
+        type: 'indicator'
+      },
+      {
+        id: 'ichimoku',
+        name: 'Ichimoku Cloud',
+        description: 'Complete trend system',
+        type: 'indicator'
+      },
+      {
+        id: 'vwap',
+        name: 'VWAP',
+        description: 'Volume weighted price',
         type: 'indicator'
       }
     ]
@@ -90,19 +162,61 @@ const nodeCategories: NodeCategory[] = [
       {
         id: 'above',
         name: 'Above Threshold',
-        description: 'Value above threshold',
+        description: 'Value > threshold',
         type: 'condition'
       },
       {
         id: 'below',
         name: 'Below Threshold',
-        description: 'Value below threshold',
+        description: 'Value < threshold',
         type: 'condition'
       },
       {
         id: 'crossover',
         name: 'Crossover',
-        description: 'Line crossover condition',
+        description: 'Line crosses above',
+        type: 'condition'
+      },
+      {
+        id: 'crossunder',
+        name: 'Cross Under',
+        description: 'Line crosses below',
+        type: 'condition'
+      },
+      {
+        id: 'range',
+        name: 'In Range',
+        description: 'Value within range',
+        type: 'condition'
+      },
+      {
+        id: 'breakout',
+        name: 'Breakout',
+        description: 'Price breaks level',
+        type: 'condition'
+      },
+      {
+        id: 'divergence',
+        name: 'Divergence',
+        description: 'Price vs indicator',
+        type: 'condition'
+      },
+      {
+        id: 'volatility',
+        name: 'Volatility Check',
+        description: 'Market volatility level',
+        type: 'condition'
+      },
+      {
+        id: 'volume-spike',
+        name: 'Volume Spike',
+        description: 'Unusual volume activity',
+        type: 'condition'
+      },
+      {
+        id: 'time-filter',
+        name: 'Time Filter',
+        description: 'Specific trading hours',
         type: 'condition'
       }
     ]
@@ -115,19 +229,73 @@ const nodeCategories: NodeCategory[] = [
       {
         id: 'buy-signal',
         name: 'Buy Signal',
-        description: 'Generate buy signals',
+        description: 'Long entry point',
         type: 'strategy'
       },
       {
         id: 'sell-signal',
         name: 'Sell Signal',
-        description: 'Generate sell signals',
+        description: 'Short entry point',
         type: 'strategy'
       },
       {
         id: 'stop-loss',
         name: 'Stop Loss',
-        description: 'Risk management',
+        description: 'Risk management exit',
+        type: 'strategy'
+      },
+      {
+        id: 'take-profit',
+        name: 'Take Profit',
+        description: 'Profit taking exit',
+        type: 'strategy'
+      },
+      {
+        id: 'trailing-stop',
+        name: 'Trailing Stop',
+        description: 'Dynamic stop loss',
+        type: 'strategy'
+      },
+      {
+        id: 'position-sizing',
+        name: 'Position Sizing',
+        description: 'Risk-based sizing',
+        type: 'strategy'
+      },
+      {
+        id: 'portfolio-balance',
+        name: 'Portfolio Balance',
+        description: 'Asset allocation',
+        type: 'strategy'
+      },
+      {
+        id: 'dca-strategy',
+        name: 'DCA Strategy',
+        description: 'Dollar cost averaging',
+        type: 'strategy'
+      },
+      {
+        id: 'grid-trading',
+        name: 'Grid Trading',
+        description: 'Grid-based orders',
+        type: 'strategy'
+      },
+      {
+        id: 'mean-reversion',
+        name: 'Mean Reversion',
+        description: 'Return to average',
+        type: 'strategy'
+      },
+      {
+        id: 'momentum',
+        name: 'Momentum',
+        description: 'Trend following',
+        type: 'strategy'
+      },
+      {
+        id: 'arbitrage',
+        name: 'Arbitrage',
+        description: 'Price difference exploit',
         type: 'strategy'
       }
     ]
@@ -139,20 +307,56 @@ const nodeCategories: NodeCategory[] = [
     items: [
       {
         id: 'performance',
-        name: 'Performance Metrics',
-        description: 'Calculate performance',
+        name: 'Performance',
+        description: 'Strategy performance',
         type: 'output'
       },
       {
         id: 'trades',
         name: 'Trade List',
-        description: 'List of trades',
+        description: 'Executed trades log',
         type: 'output'
       },
       {
         id: 'chart',
         name: 'Strategy Chart',
-        description: 'Visual representation',
+        description: 'Visual backtest chart',
+        type: 'output'
+      },
+      {
+        id: 'risk-metrics',
+        name: 'Risk Metrics',
+        description: 'Sharpe, VaR, drawdown',
+        type: 'output'
+      },
+      {
+        id: 'equity-curve',
+        name: 'Equity Curve',
+        description: 'Portfolio value over time',
+        type: 'output'
+      },
+      {
+        id: 'returns',
+        name: 'Returns Analysis',
+        description: 'Return distribution',
+        type: 'output'
+      },
+      {
+        id: 'correlation',
+        name: 'Correlation Matrix',
+        description: 'Asset correlations',
+        type: 'output'
+      },
+      {
+        id: 'monthly-returns',
+        name: 'Monthly Returns',
+        description: 'Monthly performance grid',
+        type: 'output'
+      },
+      {
+        id: 'monte-carlo',
+        name: 'Monte Carlo',
+        description: 'Simulation analysis',
         type: 'output'
       }
     ]
@@ -163,6 +367,18 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
     event.dataTransfer.setData('application/reactflow', nodeType)
     event.dataTransfer.effectAllowed = 'move'
+    
+    // Add smooth visual feedback
+    const target = event.target as HTMLElement
+    target.style.opacity = '0.7'
+    target.style.transform = 'scale(0.98)'
+    target.style.transition = 'all 0.15s ease-out'
+    
+    // Reset after drag
+    setTimeout(() => {
+      target.style.opacity = '1'
+      target.style.transform = 'scale(1)'
+    }, 150)
   }
 
   return (
@@ -202,7 +418,7 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
                       key={item.id}
                       draggable
                       onDragStart={(event) => onDragStart(event, item.type)}
-                      className="p-3 rounded-lg border border-line bg-surface hover:bg-accent/50 cursor-grab active:cursor-grabbing transition-colors group"
+                      className="p-2.5 rounded-lg border border-line bg-surface hover:bg-accent/50 cursor-grab active:cursor-grabbing transition-all duration-200 hover:scale-[1.02] hover:shadow-sm group"
                     >
                       <div className="flex items-center justify-between mb-1">
                         <h4 className="font-medium text-xs text-foreground">{item.name}</h4>
@@ -245,7 +461,7 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
                       key={item.id}
                       draggable
                       onDragStart={(event) => onDragStart(event, item.type)}
-                      className="p-3 rounded-lg border border-line bg-surface hover:bg-accent/50 cursor-grab active:cursor-grabbing transition-colors group/item"
+                      className="p-2.5 rounded-lg border border-line bg-surface hover:bg-accent/50 cursor-grab active:cursor-grabbing transition-all duration-200 hover:scale-[1.02] hover:shadow-sm group/item"
                     >
                       <div className="flex items-center justify-between mb-1">
                         <h4 className="font-medium text-xs text-foreground">{item.name}</h4>

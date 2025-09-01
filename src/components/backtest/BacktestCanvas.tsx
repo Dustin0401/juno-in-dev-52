@@ -99,12 +99,23 @@ export function BacktestCanvas() {
         return
       }
 
-      const position = {
-        x: event.clientX - 250,
-        y: event.clientY - 100,
+      // Get the ReactFlow bounds for accurate positioning
+      const reactFlowBounds = (event.target as Element).closest('.react-flow')?.getBoundingClientRect()
+      
+      if (reactFlowBounds) {
+        const position = {
+          x: event.clientX - reactFlowBounds.left - 80,
+          y: event.clientY - reactFlowBounds.top - 40,
+        }
+        addNode(type, position)
+      } else {
+        // Fallback positioning
+        const position = {
+          x: event.clientX - 250,
+          y: event.clientY - 100,
+        }
+        addNode(type, position)
       }
-
-      addNode(type, position)
     },
     [addNode]
   )
