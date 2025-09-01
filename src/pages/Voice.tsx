@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { Mic, MicOff, Play, Pause, Volume2, TrendingUp, TrendingDown, Zap, Brain, MessageCircle, Waves, Gauge, VolumeX, FileText, MicIcon } from 'lucide-react';
+import { Mic, MicOff, Play, Pause, Volume2, TrendingUp, TrendingDown, Zap, Brain, MessageCircle, Waves } from 'lucide-react';
 import { cn } from '@/lib/utils';
 interface VoiceSession {
   id: string;
@@ -89,18 +89,14 @@ export default function Voice() {
         return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
     }
   };
-  return (
-    <div className="h-full flex flex-col bg-background">
-      <div className="flex-1 flex justify-center p-6">
+  return <div className="h-full flex flex-col bg-background">
+      <div className="flex-1 flex gap-6 p-6">
         {/* Main Voice Interface */}
-        <div className="max-w-2xl w-full space-y-6">
+        <div className="flex-1 space-y-6">
           {/* Voice Control - Direct on Canvas */}
           <div className="text-center space-y-6 py-8">
             <div className="mb-6">
-              <h1 className="flex items-center justify-center gap-2 text-2xl font-bold text-foreground mb-2">
-                <Brain className="w-6 h-6 text-primary" />
-                Juno AI Voice Assistant
-              </h1>
+              
               <p className="text-muted text-lg">
                 Ask about any cryptocurrency, market trends, or trading strategies
               </p>
@@ -151,46 +147,42 @@ export default function Voice() {
                   </Badge>)}
               </div>
             </div>
+          </div>
 
-            {/* Voice Settings Icons */}
-            <div className="pt-6">
-              <div className="flex items-center justify-center gap-8">
-                {/* Speech Speed */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <Gauge className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-                  </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Speed</span>
+        </div>
+
+        {/* Voice Settings */}
+        <div className="w-80 space-y-4">
+          <Card className="border-line bg-surface/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Volume2 className="w-5 h-5 text-primary" />
+                Voice Settings
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="text-sm font-medium text-foreground">Speech Speed</label>
+                <Progress value={75} className="mt-2" />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-foreground">Voice Volume</label>
+                <Progress value={80} className="mt-2" />
+              </div>
+              <Separator />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted">Auto-transcription</span>
+                  <Badge variant="secondary">ON</Badge>
                 </div>
-
-                {/* Voice Volume */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <Volume2 className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-                  </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Volume</span>
-                </div>
-
-                {/* Auto-transcription */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <FileText className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-                  </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Transcription</span>
-                </div>
-
-                {/* Voice Activation */}
-                <div className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-surface/50 border border-line flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
-                    <MicIcon className="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-                  </div>
-                  <span className="text-xs text-muted group-hover:text-foreground transition-colors">Activation</span>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted">Voice activation</span>
+                  <Badge variant="secondary">OFF</Badge>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
