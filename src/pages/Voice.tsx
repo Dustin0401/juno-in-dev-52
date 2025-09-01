@@ -153,40 +153,6 @@ export default function Voice() {
             </div>
           </div>
 
-          {/* Live Market Insights */}
-          <Card className="border-line bg-surface/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Waves className="w-5 h-5 text-primary" />
-                Live Market Pulse
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-3 gap-4">
-                {[{
-                coin: 'BTC',
-                sentiment: 'bullish',
-                change: '+2.3%'
-              }, {
-                coin: 'ETH',
-                sentiment: 'neutral',
-                change: '+0.8%'
-              }, {
-                coin: 'SOL',
-                sentiment: 'bearish',
-                change: '-1.2%'
-              }].map(item => <div key={item.coin} className="text-center p-3 rounded-lg bg-background/50 border border-line">
-                    <div className="font-medium text-foreground">{item.coin}</div>
-                    <div className="flex items-center justify-center gap-1 mt-1">
-                      {getSentimentIcon(item.sentiment)}
-                      <span className={cn("text-sm", item.sentiment === 'bullish' ? 'text-green-500' : item.sentiment === 'bearish' ? 'text-red-500' : 'text-yellow-500')}>
-                        {item.change}
-                      </span>
-                    </div>
-                  </div>)}
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Voice Settings */}
