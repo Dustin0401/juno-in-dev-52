@@ -61,19 +61,19 @@ export function ChatHeader({
         </div>
 
         {/* Center Section - Market Selector */}
-        <div className="hidden lg:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-2 justify-center flex-1">
           {/* Crypto Selector */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="min-w-[120px] justify-between bg-surface border-line">
+              <Button variant="outline" size="sm" className="min-w-[120px] justify-center bg-surface border-line">
                 <div className="flex items-center gap-2">
                   {getCryptoIcon(selectedCrypto)}
                   <span className="font-medium">{selectedCrypto}</span>
+                  <ChevronDown className="w-3 h-3 opacity-50" />
                 </div>
-                <ChevronDown className="w-3 h-3 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-64 p-0 bg-surface border-line" align="start">
+            <PopoverContent className="w-64 p-0 bg-surface border-line" align="center">
               <Command>
                 <CommandInput placeholder="Search crypto..." />
                 <CommandEmpty>No cryptocurrency found.</CommandEmpty>
@@ -81,7 +81,7 @@ export function ChatHeader({
                   <ScrollArea className="h-64">
                     <CommandGroup>
                       {CRYPTOCURRENCIES.map(crypto => <CommandItem key={crypto} value={crypto} onSelect={() => setSelectedCrypto(crypto)} className="hover:bg-accent">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 justify-center">
                             {getCryptoIcon(crypto)}
                             <span>{crypto}</span>
                           </div>

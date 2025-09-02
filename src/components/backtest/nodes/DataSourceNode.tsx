@@ -17,7 +17,7 @@ interface DataSourceNodeProps {
 
 export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
   return (
-    <div className="bg-surface border-2 border-accent/50 rounded-md p-1.5 min-w-[75px] max-w-[85px] shadow-md">
+    <div className="bg-surface border-2 border-accent/50 rounded-sm p-1.5 min-w-[75px] max-w-[85px] shadow-md">
       <div className="flex items-center gap-1 mb-0.5">
         <Database className="w-2.5 h-2.5 text-accent" />
         <span className="font-medium text-[10px] text-foreground truncate">{data.label}</span>

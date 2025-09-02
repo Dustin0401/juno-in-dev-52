@@ -16,7 +16,7 @@ interface OutputNodeProps {
 
 export const OutputNode = memo(({ data, id }: OutputNodeProps) => {
   return (
-    <div className="bg-surface border-2 border-success/50 rounded-md p-1.5 min-w-[75px] max-w-[85px] shadow-md">
+    <div className="bg-surface border-2 border-success/50 rounded-sm p-1.5 min-w-[75px] max-w-[85px] shadow-md">
       <Handle
         type="target"
         position={Position.Left}

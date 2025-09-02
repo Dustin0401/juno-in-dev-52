@@ -2,10 +2,12 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
+import { NavLink } from 'react-router-dom'
 import { 
   ChevronLeft, 
   ChevronRight, 
   ChevronDown,
+  ArrowLeft,
   Database, 
   TrendingUp, 
   GitBranch, 
@@ -382,6 +384,15 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
     })
   }
 
+  const handleIconClick = (categoryId: string) => {
+    if (!open) {
+      onToggle()
+      setExpandedCategories(new Set([categoryId]))
+    } else {
+      toggleCategory(categoryId)
+    }
+  }
+
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
     event.dataTransfer.setData('application/reactflow', nodeType)
     event.dataTransfer.effectAllowed = 'move'
@@ -405,6 +416,16 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
       <div className="h-14 border-b border-line flex items-center justify-between px-4">
         {open && (
           <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              asChild
+              className="p-1.5 rounded-full hover:bg-accent"
+            >
+              <NavLink to="/chat">
+                <ArrowLeft className="w-4 h-4" />
+              </NavLink>
+            </Button>
             <Layers className="w-5 h-5 text-primary" />
             <h2 className="font-semibold text-foreground">Strategy Builder</h2>
           </div>
@@ -474,9 +495,24 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
       ) : (
         // Collapsed state - show category icons
         <div className="flex-1 py-4">
+          <div className="flex items-center justify-center mb-4">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              asChild
+              className="p-1.5 rounded-full hover:bg-accent"
+            >
+              <NavLink to="/chat">
+                <ArrowLeft className="w-3 h-3" />
+              </NavLink>
+            </Button>
+          </div>
           {nodeCategories.map((category) => (
             <div key={category.id} className="relative group">
-              <div className="flex items-center justify-center h-12 w-12 mx-2 mb-2 rounded-lg bg-surface hover:bg-accent/50 transition-colors cursor-pointer">
+              <div 
+                className="flex items-center justify-center h-12 w-12 mx-2 mb-2 rounded-lg bg-surface hover:bg-accent/50 transition-colors cursor-pointer"
+                onClick={() => handleIconClick(category.id)}
+              >
                 {category.icon}
               </div>
               

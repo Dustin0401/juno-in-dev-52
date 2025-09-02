@@ -17,7 +17,7 @@ interface ConditionNodeProps {
 
 export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
   return (
-    <div className="bg-surface border-2 border-warning/50 rounded-md p-1.5 min-w-[75px] max-w-[85px] shadow-md">
+    <div className="bg-surface border-2 border-warning/50 rounded-sm p-1.5 min-w-[75px] max-w-[85px] shadow-md">
       <Handle
         type="target"
         position={Position.Left}
