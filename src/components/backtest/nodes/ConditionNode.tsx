@@ -17,39 +17,39 @@ interface ConditionNodeProps {
 
 export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
   return (
-    <div className="bg-surface border-2 border-warning/50 rounded-lg p-2.5 min-w-[140px] max-w-[160px] shadow-lg">
+    <div className="bg-surface border-2 border-warning/50 rounded-md p-1.5 min-w-[75px] max-w-[85px] shadow-md">
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-warning border-2 border-background"
+        className="w-2 h-2 bg-warning border border-background"
       />
       
-      <div className="flex items-center gap-2 mb-1.5">
-        <GitBranch className="w-3.5 h-3.5 text-warning" />
-        <span className="font-semibold text-xs text-foreground truncate">{data.label}</span>
+      <div className="flex items-center gap-1 mb-0.5">
+        <GitBranch className="w-2.5 h-2.5 text-warning" />
+        <span className="font-medium text-[10px] text-foreground truncate">{data.label}</span>
       </div>
       
-      <div className="flex items-center gap-1.5 mb-2.5">
-        <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+      <div className="flex flex-col gap-0.5 mb-1">
+        <Badge variant="outline" className="text-[9px] px-1 py-0 h-auto">
           {data.conditionType.replace('_', ' ').toUpperCase()}
         </Badge>
         {data.value && (
-          <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+          <Badge variant="outline" className="text-[9px] px-1 py-0 h-auto">
             {data.value}
           </Badge>
         )}
       </div>
       
       <div className="flex justify-end">
-        <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
-          <Settings className="w-2.5 h-2.5" />
+        <Button variant="ghost" size="sm" className="h-3 w-3 p-0">
+          <Settings className="w-1.5 h-1.5" />
         </Button>
       </div>
       
       <Handle
         type="source"
         position={Position.Right}
-        className="w-3 h-3 bg-warning border-2 border-background"
+        className="w-2 h-2 bg-warning border border-background"
       />
     </div>
   )

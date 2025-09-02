@@ -16,27 +16,27 @@ interface OutputNodeProps {
 
 export const OutputNode = memo(({ data, id }: OutputNodeProps) => {
   return (
-    <div className="bg-surface border-2 border-success/50 rounded-lg p-2.5 min-w-[140px] max-w-[160px] shadow-lg">
+    <div className="bg-surface border-2 border-success/50 rounded-md p-1.5 min-w-[75px] max-w-[85px] shadow-md">
       <Handle
         type="target"
         position={Position.Left}
-        className="w-3 h-3 bg-success border-2 border-background"
+        className="w-2 h-2 bg-success border border-background"
       />
       
-      <div className="flex items-center gap-2 mb-1.5">
-        <BarChart3 className="w-3.5 h-3.5 text-success" />
-        <span className="font-semibold text-xs text-foreground truncate">{data.label}</span>
+      <div className="flex items-center gap-1 mb-0.5">
+        <BarChart3 className="w-2.5 h-2.5 text-success" />
+        <span className="font-medium text-[10px] text-foreground truncate">{data.label}</span>
       </div>
       
-      <div className="flex items-center gap-2 mb-2.5">
-        <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+      <div className="flex items-center gap-1 mb-1">
+        <Badge variant="outline" className="text-[9px] px-1 py-0 h-auto">
           {data.outputType.replace('_', ' ').toUpperCase()}
         </Badge>
       </div>
       
       <div className="flex justify-end">
-        <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
-          <Settings className="w-2.5 h-2.5" />
+        <Button variant="ghost" size="sm" className="h-3 w-3 p-0">
+          <Settings className="w-1.5 h-1.5" />
         </Button>
       </div>
     </div>
