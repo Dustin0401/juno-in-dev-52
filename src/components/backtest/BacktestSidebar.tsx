@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { 
   ChevronLeft, 
   ChevronRight, 
+  ChevronDown,
   Database, 
   TrendingUp, 
   GitBranch, 
@@ -13,6 +14,7 @@ import {
   Plus,
   Layers
 } from 'lucide-react'
+import { useState } from 'react'
 
 interface BacktestSidebarProps {
   open: boolean
@@ -364,6 +366,22 @@ const nodeCategories: NodeCategory[] = [
 ]
 
 export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
+    new Set(['data']) // Default to having Data Sources expanded
+  )
+
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(categoryId)) {
+        newSet.delete(categoryId)
+      } else {
+        newSet.add(categoryId)
+      }
+      return newSet
+    })
+  }
+
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
     event.dataTransfer.setData('application/reactflow', nodeType)
     event.dataTransfer.effectAllowed = 'move'
@@ -405,36 +423,52 @@ export function BacktestSidebar({ open, onToggle }: BacktestSidebarProps) {
       {open ? (
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-6">
-            {nodeCategories.map((category) => (
-              <div key={category.id}>
-                <div className="flex items-center gap-2 mb-3">
-                  {category.icon}
-                  <h3 className="font-medium text-sm text-foreground">{category.name}</h3>
-                </div>
-                
-                <div className="space-y-2">
-                  {category.items.map((item) => (
-                    <div
-                      key={item.id}
-                      draggable
-                      onDragStart={(event) => onDragStart(event, item.type)}
-                      className="p-2.5 rounded-lg border border-line bg-surface hover:bg-accent/50 cursor-grab active:cursor-grabbing transition-all duration-200 hover:scale-[1.02] hover:shadow-sm group"
-                    >
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-medium text-xs text-foreground">{item.name}</h4>
-                        <Plus className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                      <p className="text-xs text-muted-foreground">{item.description}</p>
-                      <Badge variant="outline" className="mt-2 text-xs">
-                        {item.type}
-                      </Badge>
+            {nodeCategories.map((category) => {
+              const isExpanded = expandedCategories.has(category.id)
+              
+              return (
+                <div key={category.id}>
+                  <div 
+                    className="flex items-center justify-between mb-3 cursor-pointer hover:text-primary transition-colors"
+                    onClick={() => toggleCategory(category.id)}
+                  >
+                    <div className="flex items-center gap-2">
+                      {category.icon}
+                      <h3 className="font-medium text-sm text-foreground">{category.name}</h3>
                     </div>
-                  ))}
+                    <ChevronDown 
+                      className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                        isExpanded ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </div>
+                  
+                  {isExpanded && (
+                    <div className="space-y-2 mb-4">
+                      {category.items.map((item) => (
+                        <div
+                          key={item.id}
+                          draggable
+                          onDragStart={(event) => onDragStart(event, item.type)}
+                          className="p-2.5 rounded-lg border border-line bg-surface hover:bg-accent/50 cursor-grab active:cursor-grabbing transition-all duration-200 hover:scale-[1.02] hover:shadow-sm group"
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <h4 className="font-medium text-xs text-foreground">{item.name}</h4>
+                            <Plus className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                          <p className="text-xs text-muted-foreground">{item.description}</p>
+                          <Badge variant="outline" className="mt-2 text-xs">
+                            {item.type}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {category.id !== 'outputs' && <Separator />}
                 </div>
-                
-                {category.id !== 'outputs' && <Separator className="mt-4" />}
-              </div>
-            ))}
+              )
+            })}
           </div>
         </ScrollArea>
       ) : (
