@@ -80,10 +80,10 @@ export function ChatHeader({
                 <CommandList>
                   <ScrollArea className="h-64">
                     <CommandGroup>
-                      {CRYPTOCURRENCIES.map(crypto => <CommandItem key={crypto} value={crypto} onSelect={() => setSelectedCrypto(crypto)} className="hover:bg-accent">
-                          <div className="flex items-center gap-2 justify-center">
+                      {CRYPTOCURRENCIES.map(crypto => <CommandItem key={crypto} value={crypto} onSelect={() => setSelectedCrypto(crypto)} className="hover:bg-accent justify-center">
+                          <div className="flex items-center gap-2 justify-center w-full">
                             {getCryptoIcon(crypto)}
-                            <span>{crypto}</span>
+                            <span className="font-medium">{crypto}</span>
                           </div>
                         </CommandItem>)}
                     </CommandGroup>
