@@ -6,41 +6,111 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TrendingUp, DollarSign, Activity, Target, BarChart3, AlertTriangle } from 'lucide-react';
 
-// Mock portfolio data
+// Mock portfolio data for different timeframes
 const mockPortfolioData = {
-  totalValue: 125420.50,
-  totalPnL: 8230.25,
-  totalPnLPercent: 7.03,
-  positions: [{
-    symbol: 'BTC',
-    amount: 2.5,
-    value: 112500,
-    pnl: 7200,
-    pnlPercent: 6.84,
-    allocation: 89.7
-  }, {
-    symbol: 'ETH',
-    amount: 4.2,
-    value: 12600,
-    pnl: 1030,
-    pnlPercent: 8.91,
-    allocation: 10.0
-  }, {
-    symbol: 'SOL',
-    amount: 1.8,
-    value: 320.50,
-    pnl: 0.25,
-    pnlPercent: 0.08,
-    allocation: 0.3
-  }],
-  riskMetrics: {
-    volatility: 32.4,
-    sharpe: 1.85,
-    maxDrawdown: -12.3,
-    beta: 0.92
+  '1d': {
+    totalValue: 125420.50,
+    totalPnL: 8230.25,
+    totalPnLPercent: 7.03,
+    positions: [{
+      symbol: 'BTC',
+      amount: 2.5,
+      value: 112500,
+      pnl: 7200,
+      pnlPercent: 6.84,
+      allocation: 89.7
+    }, {
+      symbol: 'ETH',
+      amount: 4.2,
+      value: 12600,
+      pnl: 1030,
+      pnlPercent: 8.91,
+      allocation: 10.0
+    }, {
+      symbol: 'SOL',
+      amount: 1.8,
+      value: 320.50,
+      pnl: 0.25,
+      pnlPercent: 0.08,
+      allocation: 0.3
+    }],
+    riskMetrics: {
+      volatility: 32.4,
+      sharpe: 1.85,
+      maxDrawdown: -12.3,
+      beta: 0.92
+    }
+  },
+  '1w': {
+    totalValue: 123100.75,
+    totalPnL: 5910.50,
+    totalPnLPercent: 5.04,
+    positions: [{
+      symbol: 'BTC',
+      amount: 2.5,
+      value: 110250,
+      pnl: 5450,
+      pnlPercent: 5.19,
+      allocation: 89.5
+    }, {
+      symbol: 'ETH',
+      amount: 4.2,
+      value: 12300,
+      pnl: 460,
+      pnlPercent: 3.89,
+      allocation: 10.0
+    }, {
+      symbol: 'SOL',
+      amount: 1.8,
+      value: 550.75,
+      pnl: 0.50,
+      pnlPercent: 0.09,
+      allocation: 0.5
+    }],
+    riskMetrics: {
+      volatility: 28.7,
+      sharpe: 1.92,
+      maxDrawdown: -9.8,
+      beta: 0.88
+    }
+  },
+  '1m': {
+    totalValue: 118750.25,
+    totalPnL: 1430.25,
+    totalPnLPercent: 1.22,
+    positions: [{
+      symbol: 'BTC',
+      amount: 2.5,
+      value: 106500,
+      pnl: 1200,
+      pnlPercent: 1.14,
+      allocation: 89.7
+    }, {
+      symbol: 'ETH',
+      amount: 4.2,
+      value: 11900,
+      pnl: 230,
+      pnlPercent: 1.97,
+      allocation: 10.0
+    }, {
+      symbol: 'SOL',
+      amount: 1.8,
+      value: 350.25,
+      pnl: 0.25,
+      pnlPercent: 0.07,
+      allocation: 0.3
+    }],
+    riskMetrics: {
+      volatility: 41.2,
+      sharpe: 1.65,
+      maxDrawdown: -18.5,
+      beta: 1.15
+    }
   }
 };
 export default function Portfolio() {
+  const [selectedTimeframe, setSelectedTimeframe] = useState('1d');
+  const currentData = mockPortfolioData[selectedTimeframe as keyof typeof mockPortfolioData];
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -50,28 +120,45 @@ export default function Portfolio() {
   return (
     <div className="h-full p-6 bg-background">
       <div className="max-w-7xl mx-auto space-y-6">
+        
+        {/* Timeframe Selector */}
+        <div className="flex justify-center mb-6">
+          <div className="flex items-center gap-1 bg-surface border border-line rounded-md p-1">
+            {['1d', '1w', '1m'].map(timeframe => (
+              <Button 
+                key={timeframe} 
+                variant={selectedTimeframe === timeframe ? "secondary" : "ghost"} 
+                size="sm" 
+                onClick={() => setSelectedTimeframe(timeframe)} 
+                className="text-xs px-3 py-1 h-8"
+              >
+                {timeframe}
+              </Button>
+            ))}
+          </div>
+        </div>
 
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card><CardContent className="p-6">
             <div className="flex items-center gap-2 mb-2"><DollarSign className="w-5 h-5 text-muted" /><span className="text-sm text-muted">Total Value</span></div>
-            <div className="text-2xl font-bold">{formatCurrency(mockPortfolioData.totalValue)}</div>
+            <div className="text-2xl font-bold">{formatCurrency(currentData.totalValue)}</div>
           </CardContent></Card>
           
           <Card><CardContent className="p-6">
             <div className="flex items-center gap-2 mb-2"><TrendingUp className="w-5 h-5 text-accent" /><span className="text-sm text-muted">Total P&L</span></div>
-            <div className="text-2xl font-bold text-accent">{formatCurrency(mockPortfolioData.totalPnL)}</div>
-            <div className="text-sm text-accent">{formatPercent(mockPortfolioData.totalPnLPercent)}</div>
+            <div className="text-2xl font-bold text-accent">{formatCurrency(currentData.totalPnL)}</div>
+            <div className="text-sm text-accent">{formatPercent(currentData.totalPnLPercent)}</div>
           </CardContent></Card>
           
           <Card><CardContent className="p-6">
             <div className="flex items-center gap-2 mb-2"><Activity className="w-5 h-5 text-muted" /><span className="text-sm text-muted">Volatility</span></div>
-            <div className="text-2xl font-bold">{mockPortfolioData.riskMetrics.volatility}%</div>
+            <div className="text-2xl font-bold">{currentData.riskMetrics.volatility}%</div>
           </CardContent></Card>
           
           <Card><CardContent className="p-6">
             <div className="flex items-center gap-2 mb-2"><Target className="w-5 h-5 text-muted" /><span className="text-sm text-muted">Sharpe</span></div>
-            <div className="text-2xl font-bold">{mockPortfolioData.riskMetrics.sharpe}</div>
+            <div className="text-2xl font-bold">{currentData.riskMetrics.sharpe}</div>
           </CardContent></Card>
         </div>
 
@@ -80,7 +167,7 @@ export default function Portfolio() {
           <CardHeader><CardTitle>Positions</CardTitle></CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {mockPortfolioData.positions.map(position => <div key={position.symbol} className="flex items-center justify-between p-4 bg-surface rounded-lg">
+              {currentData.positions.map(position => <div key={position.symbol} className="flex items-center justify-between p-4 bg-surface rounded-lg">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-background flex items-center justify-center font-medium">{position.symbol}</div>
                     <div><div className="font-medium">{position.symbol}</div><div className="text-sm text-muted">{position.amount} tokens</div></div>
