@@ -152,7 +152,7 @@ export default function Tasks() {
             <TabsTrigger value="history">History</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6 mt-6">
+          <TabsContent value="overview" className="space-y-6 mt-6 h-[calc(100vh-200px)] overflow-y-auto">
             {/* Task Type Overview */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {getTaskTypeStats().map((type) => {

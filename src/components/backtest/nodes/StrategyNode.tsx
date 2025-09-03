@@ -24,7 +24,7 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
   const [strategyType, setStrategyType] = useState(data.strategyType);
 
   return (
-    <div className="bg-surface border-2 border-primary/20 rounded-sm p-2 min-w-[120px] max-w-[140px] shadow-md">
+    <div className="bg-surface border-2 border-primary/20 rounded-sm p-2 min-w-[160px] max-w-[180px] min-h-[70px] max-h-[90px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -37,12 +37,13 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
           <span className="font-medium text-xs text-foreground truncate">{label}</span>
         </div>
         
-        <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-primary/20">
-              <Settings className="w-2 h-2" />
-            </Button>
-          </PopoverTrigger>
+        <div className="flex items-center gap-1">
+          <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-3 w-3 p-0 hover:bg-primary/20">
+                <Settings className="w-2 h-2" />
+              </Button>
+            </PopoverTrigger>
           <PopoverContent className="w-64 p-3" align="start">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-sm font-medium">Strategy Settings</h4>
@@ -73,6 +74,19 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
             </div>
           </PopoverContent>
         </Popover>
+        
+        {/* Delete Button */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => {
+            console.log('Delete node:', id);
+          }}
+        >
+          <span className="text-red-500 text-xs">×</span>
+        </Button>
+      </div>
       </div>
       
       <div className="mb-2">

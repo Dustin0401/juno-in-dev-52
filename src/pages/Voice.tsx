@@ -120,7 +120,7 @@ export default function Voice() {
         {/* Main Voice Interface */}
         <div className="max-w-2xl w-full space-y-6">
           {/* Voice Control - Direct on Canvas */}
-          <div className="text-center space-y-6 py-4">
+          <div className="text-center space-y-6 py-2">
             <div className="mb-6">
               <h1 className="flex items-center justify-center gap-2 text-2xl font-bold text-foreground mb-2">
                 <Brain className="w-6 h-6 text-primary" />

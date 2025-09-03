@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TrendingUp, DollarSign, Activity, Target, BarChart3, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Mock portfolio data for different timeframes
 const mockPortfolioData = {
@@ -109,8 +108,8 @@ const mockPortfolioData = {
   }
 };
 export default function Portfolio() {
-  const [selectedTimeframe, setSelectedTimeframe] = useState('1d');
-  const currentData = mockPortfolioData[selectedTimeframe as keyof typeof mockPortfolioData];
+  // Get timeframe from URL params or default to '1d'
+  const currentData = mockPortfolioData['1d'];
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -121,22 +120,6 @@ export default function Portfolio() {
     <div className="h-full p-6 bg-background">
       <div className="max-w-7xl mx-auto space-y-6">
         
-        {/* Timeframe Selector */}
-        <div className="flex justify-center mb-6">
-          <div className="flex items-center gap-1 bg-surface border border-line rounded-md p-1">
-            {['1d', '1w', '1m'].map(timeframe => (
-              <Button 
-                key={timeframe} 
-                variant={selectedTimeframe === timeframe ? "secondary" : "ghost"} 
-                size="sm" 
-                onClick={() => setSelectedTimeframe(timeframe)} 
-                className="text-xs px-3 py-1 h-8"
-              >
-                {timeframe}
-              </Button>
-            ))}
-          </div>
-        </div>
 
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

@@ -26,7 +26,7 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
   const [value, setValue] = useState(data.value || 0);
 
   return (
-    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[120px] max-w-[140px] shadow-md">
+    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[160px] max-w-[180px] min-h-[70px] max-h-[90px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -39,12 +39,13 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
           <span className="font-medium text-xs text-foreground truncate">{label}</span>
         </div>
         
-        <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-warning/20">
-              <Settings className="w-2 h-2" />
-            </Button>
-          </PopoverTrigger>
+        <div className="flex items-center gap-1">
+          <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-3 w-3 p-0 hover:bg-warning/20">
+                <Settings className="w-2 h-2" />
+              </Button>
+            </PopoverTrigger>
           <PopoverContent className="w-64 p-3" align="start">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-sm font-medium">Condition Settings</h4>
@@ -79,6 +80,19 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
             </div>
           </PopoverContent>
         </Popover>
+        
+        {/* Delete Button */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => {
+            console.log('Delete node:', id);
+          }}
+        >
+          <span className="text-red-500 text-xs">×</span>
+        </Button>
+      </div>
       </div>
       
       <div className="flex flex-col gap-1 mb-2">

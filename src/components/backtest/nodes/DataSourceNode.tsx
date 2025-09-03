@@ -26,19 +26,20 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
   const [label, setLabel] = useState(data.label);
 
   return (
-    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[120px] max-w-[140px] shadow-md">
+    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[160px] max-w-[180px] min-h-[70px] max-h-[90px] shadow-md relative group">
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-1">
           <Database className="w-3 h-3 text-accent" />
           <span className="font-medium text-xs text-foreground truncate">{label}</span>
         </div>
         
-        <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-accent/20">
-              <Settings className="w-2 h-2" />
-            </Button>
-          </PopoverTrigger>
+        <div className="flex items-center gap-1">
+          <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-3 w-3 p-0 hover:bg-accent/20">
+                <Settings className="w-2 h-2" />
+              </Button>
+            </PopoverTrigger>
           <PopoverContent className="w-64 p-3" align="start">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-sm font-medium">Data Source Settings</h4>
@@ -82,6 +83,20 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
             </div>
           </PopoverContent>
         </Popover>
+        
+        {/* Delete Button */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => {
+            // Handle node deletion - this would typically be handled by the parent component
+            console.log('Delete node:', id);
+          }}
+        >
+          <span className="text-red-500 text-xs">×</span>
+        </Button>
+      </div>
       </div>
       
       <div className="flex flex-col gap-1 mb-2">
