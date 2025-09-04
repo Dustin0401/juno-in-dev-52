@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TrendingUp, DollarSign, Activity, Target, BarChart3, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PortfolioHeader } from '@/components/headers/PortfolioHeader';
 
 // Mock portfolio data for different timeframes
 const mockPortfolioData = {
@@ -143,8 +142,38 @@ const mockPortfolioData = {
   }
 };
 export default function Portfolio() {
-  const [selectedTimeframe, setSelectedTimeframe] = useState('1d');
-  const currentData = mockPortfolioData[selectedTimeframe as keyof typeof mockPortfolioData];
+  const [selectedTimeframe, setSelectedTimeframe] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('timeframe') || localStorage.getItem('portfolio-timeframe') || '1d';
+  });
+  
+  // Listen for timeframe changes from header
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const timeframe = urlParams.get('timeframe') || localStorage.getItem('portfolio-timeframe') || '1d';
+      setSelectedTimeframe(timeframe);
+    };
+    
+    // Listen for custom events and popstate
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('popstate', handleStorageChange);
+    
+    // Custom event for same-page updates
+    const handleTimeframeChange = (e: CustomEvent) => {
+      setSelectedTimeframe(e.detail.timeframe);
+    };
+    
+    window.addEventListener('timeframeChanged', handleTimeframeChange as EventListener);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('popstate', handleStorageChange);
+      window.removeEventListener('timeframeChanged', handleTimeframeChange as EventListener);
+    };
+  }, []);
+  
+  const currentData = mockPortfolioData[selectedTimeframe as keyof typeof mockPortfolioData] || mockPortfolioData['1d'];
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -152,15 +181,8 @@ export default function Portfolio() {
   const formatPercent = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
   
   return (
-    <div className="h-full bg-background">
-      <PortfolioHeader 
-        sidebarOpen={false} 
-        onToggleSidebar={() => {}} 
-        selectedPeriod={selectedTimeframe}
-        onPeriodChange={setSelectedTimeframe}
-      />
-      <div className="p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+    <div className="h-full p-6 bg-background">
+      <div className="max-w-7xl mx-auto space-y-6">
         
 
         {/* Overview Cards */}
@@ -207,7 +229,6 @@ export default function Portfolio() {
             </div>
           </CardContent>
         </Card>
-        </div>
       </div>
     </div>
   );

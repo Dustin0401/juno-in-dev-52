@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { ChatSidebar } from './ChatSidebar'
 import { ChatHeader } from './ChatHeader'
@@ -10,7 +10,17 @@ import { cn } from '@/lib/utils'
 
 export function ChatLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [selectedTimeframe, setSelectedTimeframe] = useState('1d')
   const location = useLocation()
+  
+  // Sync timeframe from localStorage/URL on mount
+  useEffect(() => {
+    if (location.pathname.startsWith('/portfolio')) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const timeframeFromUrl = urlParams.get('timeframe') || localStorage.getItem('portfolio-timeframe') || '1d';
+      setSelectedTimeframe(timeframeFromUrl);
+    }
+  }, [location.pathname])
   
   const getHeaderComponent = () => {
     if (location.pathname.startsWith('/chat')) {
@@ -27,6 +37,17 @@ export function ChatLayout() {
         <PortfolioHeader 
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          selectedPeriod={selectedTimeframe}
+          onPeriodChange={(period) => {
+            setSelectedTimeframe(period);
+            localStorage.setItem('portfolio-timeframe', period);
+            // Update URL without refresh
+            const url = new URL(window.location.href);
+            url.searchParams.set('timeframe', period);
+            window.history.replaceState({}, '', url);
+            // Dispatch custom event for same-page updates
+            window.dispatchEvent(new CustomEvent('timeframeChanged', { detail: { timeframe: period } }));
+          }}
         />
       )
     }
