@@ -14,6 +14,7 @@ import Team from "./pages/Team";
 import Voice from "./pages/Voice";
 import Tasks from "./pages/Tasks";
 import Backtest from "./pages/Backtest";
+import Staking from "./pages/Staking";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,9 @@ const App = () => (
             </Route>
             <Route path="/settings" element={<ChatLayout />}>
               <Route index element={<Settings />} />
+            </Route>
+            <Route path="/staking" element={<ChatLayout />}>
+              <Route index element={<Staking />} />
             </Route>
             <Route path="/voice" element={<ChatLayout />}>
               <Route index element={<Voice />} />

@@ -152,7 +152,13 @@ export default function Tasks() {
             <TabsTrigger value="history">History</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6 mt-6 h-[calc(100vh-200px)] overflow-y-auto">
+          <TabsContent value="overview" className="space-y-6 mt-6 h-[calc(100vh-200px)]">
+            <ScrollArea className="h-full">
+              <div className="space-y-6 pr-4"
+                style={{
+                  scrollBehavior: 'smooth'
+                }}
+              >
             {/* Task Type Overview */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {getTaskTypeStats().map((type) => {
@@ -226,6 +232,8 @@ export default function Tasks() {
                 </div>
               </CardContent>
             </Card>
+              </div>
+            </ScrollArea>
           </TabsContent>
 
           <TabsContent value="active" className="space-y-4 mt-6">

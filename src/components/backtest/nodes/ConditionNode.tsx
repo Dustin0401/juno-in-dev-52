@@ -26,7 +26,7 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
   const [value, setValue] = useState(data.value || 0);
 
   return (
-    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[160px] max-w-[180px] min-h-[70px] max-h-[90px] shadow-md relative group">
+    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[184px] max-w-[200px] min-h-[49px] max-h-[63px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
