@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils'
 interface PortfolioHeaderProps {
   sidebarOpen: boolean
   onToggleSidebar: () => void
+  selectedPeriod?: string
+  onPeriodChange?: (period: string) => void
 }
 
 const timePeriods = [
@@ -15,8 +17,7 @@ const timePeriods = [
   { label: 'All Time', value: 'all' }
 ]
 
-export function PortfolioHeader({ sidebarOpen, onToggleSidebar }: PortfolioHeaderProps) {
-  const [selectedPeriod, setSelectedPeriod] = useState('1d')
+export function PortfolioHeader({ sidebarOpen, onToggleSidebar, selectedPeriod = '1d', onPeriodChange }: PortfolioHeaderProps) {
 
   return (
     <PageHeader sidebarOpen={sidebarOpen} onToggleSidebar={onToggleSidebar}>
@@ -26,7 +27,7 @@ export function PortfolioHeader({ sidebarOpen, onToggleSidebar }: PortfolioHeade
             key={period.value}
             variant="ghost"
             size="sm"
-            onClick={() => setSelectedPeriod(period.value)}
+            onClick={() => onPeriodChange?.(period.value)}
             className={cn(
               "h-8 px-3 text-sm transition-colors",
               selectedPeriod === period.value

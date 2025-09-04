@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TrendingUp, DollarSign, Activity, Target, BarChart3, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { PortfolioHeader } from '@/components/headers/PortfolioHeader';
 
 // Mock portfolio data for different timeframes
 const mockPortfolioData = {
@@ -40,7 +42,7 @@ const mockPortfolioData = {
       beta: 0.92
     }
   },
-  '1w': {
+  '7d': {
     totalValue: 123100.75,
     totalPnL: 5910.50,
     totalPnLPercent: 5.04,
@@ -105,11 +107,44 @@ const mockPortfolioData = {
       maxDrawdown: -18.5,
       beta: 1.15
     }
+  },
+  'all': {
+    totalValue: 150320.75,
+    totalPnL: 33000.50,
+    totalPnLPercent: 28.15,
+    positions: [{
+      symbol: 'BTC',
+      amount: 2.5,
+      value: 135000,
+      pnl: 30000,
+      pnlPercent: 28.57,
+      allocation: 89.8
+    }, {
+      symbol: 'ETH',
+      amount: 4.2,
+      value: 14800,
+      pnl: 2800,
+      pnlPercent: 23.33,
+      allocation: 9.8
+    }, {
+      symbol: 'SOL',
+      amount: 1.8,
+      value: 520.75,
+      pnl: 200.50,
+      pnlPercent: 62.66,
+      allocation: 0.4
+    }],
+    riskMetrics: {
+      volatility: 45.8,
+      sharpe: 2.15,
+      maxDrawdown: -22.7,
+      beta: 1.05
+    }
   }
 };
 export default function Portfolio() {
-  // Get timeframe from URL params or default to '1d'
-  const currentData = mockPortfolioData['1d'];
+  const [selectedTimeframe, setSelectedTimeframe] = useState('1d');
+  const currentData = mockPortfolioData[selectedTimeframe as keyof typeof mockPortfolioData];
   const formatCurrency = (value: number) => new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -117,8 +152,15 @@ export default function Portfolio() {
   const formatPercent = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
   
   return (
-    <div className="h-full p-6 bg-background">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="h-full bg-background">
+      <PortfolioHeader 
+        sidebarOpen={false} 
+        onToggleSidebar={() => {}} 
+        selectedPeriod={selectedTimeframe}
+        onPeriodChange={setSelectedTimeframe}
+      />
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto space-y-6">
         
 
         {/* Overview Cards */}
@@ -165,6 +207,7 @@ export default function Portfolio() {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   );
