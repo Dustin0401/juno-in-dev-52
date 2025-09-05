@@ -52,6 +52,43 @@ export function BacktestCanvas() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
+  const deleteNode = useCallback((nodeId: string) => {
+    setNodes((nds) => nds.filter((node) => node.id !== nodeId))
+    setEdges((eds) => eds.filter((edge) => edge.source !== nodeId && edge.target !== nodeId))
+  }, [setNodes, setEdges])
+
+  const resetCanvas = useCallback(() => {
+    setNodes(initialNodes)
+    setEdges(initialEdges)
+  }, [setNodes, setEdges])
+
+  const getStrategyName = useCallback(() => {
+    const indicators = nodes.filter(node => node.type === 'indicator')
+    const conditions = nodes.filter(node => node.type === 'condition')
+    
+    if (indicators.length === 0 && conditions.length === 0) {
+      return 'Basic Strategy'
+    }
+    
+    const indicatorTypes = indicators.map(node => node.data.indicatorType || 'indicator')
+    const conditionTypes = conditions.map(node => node.data.conditionType || 'condition')
+    
+    if (indicatorTypes.includes('sma') || indicatorTypes.includes('ema')) {
+      return 'Moving Average Strategy'
+    }
+    if (indicatorTypes.includes('rsi')) {
+      return 'RSI Strategy'
+    }
+    if (indicatorTypes.includes('macd')) {
+      return 'MACD Strategy'
+    }
+    if (indicatorTypes.includes('bollinger')) {
+      return 'Bollinger Bands Strategy'
+    }
+    
+    return `Custom Strategy (${indicators.length + conditions.length} components)`
+  }, [nodes])
+
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
@@ -62,10 +99,10 @@ export function BacktestCanvas() {
       id: `${type}-${Date.now()}`,
       type,
       position,
-      data: getDefaultNodeData(type),
+      data: { ...getDefaultNodeData(type), onDelete: deleteNode },
     }
     setNodes((nds) => nds.concat(newNode))
-  }, [setNodes])
+  }, [setNodes, deleteNode])
 
   const getDefaultNodeData = (type: string) => {
     switch (type) {
@@ -128,7 +165,10 @@ export function BacktestCanvas() {
       {/* Main Canvas Area */}
       <div className="flex-1 flex flex-col">
         {/* Toolbar */}
-        <BacktestToolbar />
+        <BacktestToolbar 
+          onReset={resetCanvas}
+          strategyName={getStrategyName()}
+        />
         
         {/* Canvas */}
         <div className="flex-1 relative">

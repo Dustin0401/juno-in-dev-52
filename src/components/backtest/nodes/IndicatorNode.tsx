@@ -12,6 +12,7 @@ interface IndicatorNodeData {
   label: string
   indicatorType: string
   period?: number
+  onDelete?: (id: string) => void
 }
 
 interface IndicatorNodeProps {
@@ -26,7 +27,7 @@ export const IndicatorNode = memo(({ data, id }: IndicatorNodeProps) => {
   const [period, setPeriod] = useState(data.period || 14);
 
   return (
-    <div className="bg-surface border-2 border-secondary/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[45px] max-h-[58px] shadow-md relative group">
+    <div className="bg-surface border-2 border-secondary/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[55px] max-h-[68px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -87,7 +88,9 @@ export const IndicatorNode = memo(({ data, id }: IndicatorNodeProps) => {
           size="sm" 
           className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => {
-            console.log('Delete node:', id);
+            if (data.onDelete) {
+              data.onDelete(id);
+            }
           }}
         >
           <span className="text-red-500 text-xs">×</span>

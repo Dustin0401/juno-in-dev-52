@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 interface StrategyNodeData {
   label: string
   strategyType: string
+  onDelete?: (id: string) => void
 }
 
 interface StrategyNodeProps {
@@ -24,7 +25,7 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
   const [strategyType, setStrategyType] = useState(data.strategyType);
 
   return (
-    <div className="bg-surface border-2 border-primary/20 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[45px] max-h-[58px] shadow-md relative group">
+    <div className="bg-surface border-2 border-primary/20 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[55px] max-h-[68px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -81,7 +82,9 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
           size="sm" 
           className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => {
-            console.log('Delete node:', id);
+            if (data.onDelete) {
+              data.onDelete(id);
+            }
           }}
         >
           <span className="text-red-500 text-xs">×</span>

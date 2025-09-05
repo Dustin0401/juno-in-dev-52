@@ -1,12 +1,27 @@
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { CalendarIcon, ChevronDown } from 'lucide-react'
 import { Play, Pause, Square, RotateCcw, Settings, Save, FolderOpen, Download } from 'lucide-react'
 import { useState } from 'react'
+import { format } from 'date-fns'
 
-export function BacktestToolbar() {
+interface BacktestToolbarProps {
+  onReset: () => void
+  strategyName: string
+}
+
+export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps) {
   const [isRunning, setIsRunning] = useState(false)
   const [status, setStatus] = useState<'idle' | 'running' | 'completed' | 'error'>('idle')
+  const [timeframe, setTimeframe] = useState('1H')
+  const [startDate, setStartDate] = useState<Date>(new Date('2023-01-01'))
+  const [endDate, setEndDate] = useState<Date>(new Date('2024-01-01'))
+  const [startDateOpen, setStartDateOpen] = useState(false)
+  const [endDateOpen, setEndDateOpen] = useState(false)
 
   const handleRun = () => {
     setIsRunning(true)
@@ -88,7 +103,7 @@ export function BacktestToolbar() {
           Stop
         </Button>
         
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" onClick={onReset}>
           <RotateCcw className="w-4 h-4 mr-2" />
           Reset
         </Button>
@@ -106,13 +121,68 @@ export function BacktestToolbar() {
       {/* Center Section - Strategy Info */}
       <div className="hidden md:flex items-center gap-4">
         <div className="text-sm text-muted-foreground">
-          <span className="font-medium">Strategy:</span> Moving Average Crossover
+          <span className="font-medium">Strategy:</span> {strategyName}
         </div>
-        <div className="text-sm text-muted-foreground">
-          <span className="font-medium">Timeframe:</span> 1H
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-sm text-muted-foreground">Timeframe:</span>
+          <Select value={timeframe} onValueChange={setTimeframe}>
+            <SelectTrigger className="w-16 h-6 text-xs">
+              <SelectValue />
+              <ChevronDown className="w-3 h-3" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1m">1m</SelectItem>
+              <SelectItem value="5m">5m</SelectItem>
+              <SelectItem value="15m">15m</SelectItem>
+              <SelectItem value="1H">1H</SelectItem>
+              <SelectItem value="4H">4H</SelectItem>
+              <SelectItem value="1D">1D</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="text-sm text-muted-foreground">
-          <span className="font-medium">Period:</span> 2023-01-01 to 2024-01-01
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-sm text-muted-foreground">Period:</span>
+          <div className="flex items-center gap-1">
+            <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-6 px-2 text-xs">
+                  {format(startDate, 'yyyy-MM-dd')}
+                  <CalendarIcon className="w-3 h-3 ml-1" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={startDate}
+                  onSelect={(date) => {
+                    if (date) setStartDate(date)
+                    setStartDateOpen(false)
+                  }}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            <span className="text-xs text-muted-foreground">to</span>
+            <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-6 px-2 text-xs">
+                  {format(endDate, 'yyyy-MM-dd')}
+                  <CalendarIcon className="w-3 h-3 ml-1" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={endDate}
+                  onSelect={(date) => {
+                    if (date) setEndDate(date)
+                    setEndDateOpen(false)
+                  }}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </div>
 

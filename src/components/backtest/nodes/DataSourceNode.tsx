@@ -12,6 +12,7 @@ interface DataSourceNodeData {
   label: string
   symbol: string
   timeframe: string
+  onDelete?: (id: string) => void
 }
 
 interface DataSourceNodeProps {
@@ -26,7 +27,7 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
   const [label, setLabel] = useState(data.label);
 
   return (
-    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[45px] max-h-[58px] shadow-md relative group">
+    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[55px] max-h-[68px] shadow-md relative group">
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-1">
           <Database className="w-3 h-3 text-accent" />
@@ -90,8 +91,9 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
           size="sm" 
           className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => {
-            // Handle node deletion - this would typically be handled by the parent component
-            console.log('Delete node:', id);
+            if (data.onDelete) {
+              data.onDelete(id);
+            }
           }}
         >
           <span className="text-red-500 text-xs">×</span>

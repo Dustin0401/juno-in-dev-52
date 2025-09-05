@@ -12,6 +12,7 @@ interface ConditionNodeData {
   label: string
   conditionType: string
   value?: number
+  onDelete?: (id: string) => void
 }
 
 interface ConditionNodeProps {
@@ -26,7 +27,7 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
   const [value, setValue] = useState(data.value || 0);
 
   return (
-    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[45px] max-h-[58px] shadow-md relative group">
+    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[65px] max-h-[78px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -87,7 +88,9 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
           size="sm" 
           className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => {
-            console.log('Delete node:', id);
+            if (data.onDelete) {
+              data.onDelete(id);
+            }
           }}
         >
           <span className="text-red-500 text-xs">×</span>
