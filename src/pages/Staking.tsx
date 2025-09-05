@@ -1,26 +1,20 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
-import { Switch } from '@/components/ui/switch'
-import { Coins, Crown, Zap, Users } from 'lucide-react'
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
+import { Coins, Crown, Zap, Users } from 'lucide-react';
 export default function Staking() {
   const mockStaking = {
     staked: 15000,
     tier: 'pro',
     credits: 320,
     dailyCredits: 500
-  }
-
-  return (
-    <div className="h-full overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40">
+  };
+  return <div className="h-full overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40">
       <div className="p-6 max-w-4xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-foreground mb-2">$JNO Staking</h1>
-        <p className="text-muted">Stake $JNO tokens to unlock premium features and earn rewards</p>
-      </div>
+      
 
       {/* Staking Overview */}
       <Card className="mb-6">
@@ -59,7 +53,7 @@ export default function Staking() {
               <span className="text-muted-foreground">Daily Credits Used</span>
               <span>{mockStaking.dailyCredits - mockStaking.credits} / {mockStaking.dailyCredits}</span>
             </div>
-            <Progress value={((mockStaking.dailyCredits - mockStaking.credits) / mockStaking.dailyCredits) * 100} />
+            <Progress value={(mockStaking.dailyCredits - mockStaking.credits) / mockStaking.dailyCredits * 100} />
           </div>
           
           <div className="flex gap-3 mt-6">
@@ -108,6 +102,5 @@ export default function Staking() {
         </CardContent>
       </Card>
       </div>
-    </div>
-  )
+    </div>;
 }
