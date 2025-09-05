@@ -12,7 +12,13 @@ export default function Staking() {
     credits: 320,
     dailyCredits: 500
   };
-  return <div className="h-full overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40">
+  return <div className="h-full overflow-y-auto staking-scrollbar"
+    style={{
+      scrollBehavior: 'smooth',
+      scrollbarWidth: 'thin',
+      scrollbarColor: 'hsl(var(--muted-foreground) / 0.3) transparent'
+    }}
+  >
       <div className="p-6 max-w-4xl mx-auto">
       
 

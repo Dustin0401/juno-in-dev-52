@@ -26,7 +26,7 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
   const [label, setLabel] = useState(data.label);
 
   return (
-    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[184px] max-w-[200px] min-h-[49px] max-h-[63px] shadow-md relative group">
+    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[45px] max-h-[58px] shadow-md relative group">
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-1">
           <Database className="w-3 h-3 text-accent" />
