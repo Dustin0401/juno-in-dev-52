@@ -15,7 +15,8 @@ export default function Staking() {
   }
 
   return (
-    <div className="h-full p-6 max-w-4xl mx-auto">
+    <div className="h-full overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/20 hover:scrollbar-thumb-muted-foreground/40">
+      <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-foreground mb-2">$JNO Staking</h1>
         <p className="text-muted">Stake $JNO tokens to unlock premium features and earn rewards</p>
@@ -106,6 +107,7 @@ export default function Staking() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }

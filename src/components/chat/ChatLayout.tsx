@@ -6,6 +6,7 @@ import { PortfolioHeader } from '@/components/headers/PortfolioHeader'
 import { VoiceHeader } from '@/components/headers/VoiceHeader'
 import { TasksHeader } from '@/components/headers/TasksHeader'
 import { SettingsHeader } from '@/components/headers/SettingsHeader'
+import { StakingHeader } from '@/components/headers/StakingHeader'
 import { cn } from '@/lib/utils'
 
 export function ChatLayout() {
@@ -73,6 +74,15 @@ export function ChatLayout() {
     if (location.pathname.startsWith('/settings')) {
       return (
         <SettingsHeader 
+          sidebarOpen={sidebarOpen}
+          onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        />
+      )
+    }
+    
+    if (location.pathname.startsWith('/staking')) {
+      return (
+        <StakingHeader 
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         />

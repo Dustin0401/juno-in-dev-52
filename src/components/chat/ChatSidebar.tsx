@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { MessageSquare, Plus, TrendingUp, Upload, Mic, Calendar, Settings, Users, Coins } from 'lucide-react';
+import { MessageSquare, Plus, TrendingUp, Upload, Mic, Calendar, Users, Coins } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Conversation } from '@/types';
 const mockConversations: Conversation[] = [{
@@ -69,13 +69,6 @@ export function ChatSidebar() {
       }) => cn("flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors", isActive ? "bg-primary/10 text-primary" : "text-muted hover:bg-surface hover:text-foreground")}>
           <Coins className="w-4 h-4" />
           Staking
-        </NavLink>
-
-        <NavLink to="/settings" className={({
-        isActive
-      }) => cn("flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors", isActive ? "bg-primary/10 text-primary" : "text-muted hover:bg-surface hover:text-foreground")}>
-          <Settings className="w-4 h-4" />
-          Settings
         </NavLink>
 
 
