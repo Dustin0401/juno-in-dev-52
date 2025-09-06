@@ -93,12 +93,7 @@ export function BacktestToolbar({
         
         <Separator orientation="vertical" className="h-6" />
         
-        <Badge variant="outline" className={getStatusColor()}>
-          {status === 'idle' && 'Ready'}
-          {status === 'running' && 'Running'}
-          {status === 'completed' && 'Completed'}
-          {status === 'error' && 'Error'}
-        </Badge>
+        
       </div>
 
       {/* Center Section - Strategy Info */}
