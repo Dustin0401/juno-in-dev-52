@@ -1,51 +1,49 @@
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { CalendarIcon, ChevronDown } from 'lucide-react'
-import { Play, Pause, Square, RotateCcw, Settings, Save, FolderOpen, Download } from 'lucide-react'
-import { useState } from 'react'
-import { format } from 'date-fns'
-
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { CalendarIcon, ChevronDown } from 'lucide-react';
+import { Play, Pause, Square, RotateCcw, Settings, Save, FolderOpen, Download } from 'lucide-react';
+import { useState } from 'react';
+import { format } from 'date-fns';
 interface BacktestToolbarProps {
-  onReset: () => void
-  strategyName: string
+  onReset: () => void;
+  strategyName: string;
 }
-
-export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps) {
-  const [isRunning, setIsRunning] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'running' | 'completed' | 'error'>('idle')
-  const [timeframe, setTimeframe] = useState('1H')
-  const [startDate, setStartDate] = useState<Date>(new Date('2023-01-01'))
-  const [endDate, setEndDate] = useState<Date>(new Date('2024-01-01'))
-  const [startDateOpen, setStartDateOpen] = useState(false)
-  const [endDateOpen, setEndDateOpen] = useState(false)
-
+export function BacktestToolbar({
+  onReset,
+  strategyName
+}: BacktestToolbarProps) {
+  const [isRunning, setIsRunning] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'running' | 'completed' | 'error'>('idle');
+  const [timeframe, setTimeframe] = useState('1H');
+  const [startDate, setStartDate] = useState<Date>(new Date('2023-01-01'));
+  const [endDate, setEndDate] = useState<Date>(new Date('2024-01-01'));
+  const [startDateOpen, setStartDateOpen] = useState(false);
+  const [endDateOpen, setEndDateOpen] = useState(false);
   const handleRun = () => {
-    setIsRunning(true)
-    setStatus('running')
-    
+    setIsRunning(true);
+    setStatus('running');
+
     // Implement actual backtest logic
-    console.log('Starting backtest execution...')
-    
+    console.log('Starting backtest execution...');
+
     // Simulate progressive backtest with real-time updates
-    const duration = 5000 // 5 seconds for demo
-    const intervals = 10
-    const intervalTime = duration / intervals
-    
-    let progress = 0
+    const duration = 5000; // 5 seconds for demo
+    const intervals = 10;
+    const intervalTime = duration / intervals;
+    let progress = 0;
     const progressInterval = setInterval(() => {
-      progress += 10
-      console.log(`Backtest progress: ${progress}%`)
-      
+      progress += 10;
+      console.log(`Backtest progress: ${progress}%`);
       if (progress >= 100) {
-        clearInterval(progressInterval)
-        setIsRunning(false)
-        setStatus('completed')
-        console.log('Backtest completed successfully!')
-        
+        clearInterval(progressInterval);
+        setIsRunning(false);
+        setStatus('completed');
+        console.log('Backtest completed successfully!');
+
         // Simulate results
         const results = {
           totalReturn: '+24.5%',
@@ -53,52 +51,37 @@ export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps)
           maxDrawdown: '-8.2%',
           winRate: '68%',
           totalTrades: 142
-        }
-        console.log('Backtest Results:', results)
+        };
+        console.log('Backtest Results:', results);
       }
-    }, intervalTime)
-  }
-
+    }, intervalTime);
+  };
   const handleStop = () => {
-    setIsRunning(false)
-    setStatus('idle')
-    console.log('Backtest stopped by user')
-  }
-
+    setIsRunning(false);
+    setStatus('idle');
+    console.log('Backtest stopped by user');
+  };
   const getStatusColor = () => {
     switch (status) {
       case 'running':
-        return 'bg-warning/10 text-warning border-warning/20'
+        return 'bg-warning/10 text-warning border-warning/20';
       case 'completed':
-        return 'bg-success/10 text-success border-success/20'
+        return 'bg-success/10 text-success border-success/20';
       case 'error':
-        return 'bg-destructive/10 text-destructive border-destructive/20'
+        return 'bg-destructive/10 text-destructive border-destructive/20';
       default:
-        return 'bg-muted/10 text-muted-foreground border-muted/20'
+        return 'bg-muted/10 text-muted-foreground border-muted/20';
     }
-  }
-
-  return (
-    <div className="h-14 border-b border-line bg-surface/50 backdrop-blur-sm flex items-center justify-between px-4">
+  };
+  return <div className="h-14 border-b border-line bg-surface/50 backdrop-blur-sm flex items-center justify-between px-4">
       {/* Left Section - Strategy Controls */}
       <div className="flex items-center gap-2">
-        <Button
-          variant="default"
-          size="sm"
-          onClick={handleRun}
-          disabled={isRunning}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
-        >
+        <Button variant="default" size="sm" onClick={handleRun} disabled={isRunning} className="bg-primary text-primary-foreground hover:bg-primary/90">
           <Play className="w-4 h-4 mr-2" />
           {isRunning ? 'Running...' : 'Run Backtest'}
         </Button>
         
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleStop}
-          disabled={!isRunning}
-        >
+        <Button variant="outline" size="sm" onClick={handleStop} disabled={!isRunning}>
           <Square className="w-4 h-4 mr-2" />
           Stop
         </Button>
@@ -151,15 +134,10 @@ export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps)
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={startDate}
-                  onSelect={(date) => {
-                    if (date) setStartDate(date)
-                    setStartDateOpen(false)
-                  }}
-                  initialFocus
-                />
+                <Calendar mode="single" selected={startDate} onSelect={date => {
+                if (date) setStartDate(date);
+                setStartDateOpen(false);
+              }} initialFocus />
               </PopoverContent>
             </Popover>
             <span className="text-xs text-muted-foreground">to</span>
@@ -171,15 +149,10 @@ export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps)
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={endDate}
-                  onSelect={(date) => {
-                    if (date) setEndDate(date)
-                    setEndDateOpen(false)
-                  }}
-                  initialFocus
-                />
+                <Calendar mode="single" selected={endDate} onSelect={date => {
+                if (date) setEndDate(date);
+                setEndDateOpen(false);
+              }} initialFocus />
               </PopoverContent>
             </Popover>
           </div>
@@ -200,9 +173,8 @@ export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps)
           <Download className="w-4 h-4" />
         </Button>
         
-        <Separator orientation="vertical" className="h-6" />
+        
         
       </div>
-    </div>
-  )
+    </div>;
 }
