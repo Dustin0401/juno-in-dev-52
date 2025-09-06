@@ -8,7 +8,8 @@ import { Send, Paperclip, Command } from 'lucide-react'
 import { ChatMessage } from './ChatMessage'
 import { SlashCommandMenu } from './SlashCommandMenu'
 import { AgentCoordinator } from '@/lib/agents/coordinator'
-import type { ChatMessage as ChatMessageType, SlashCommand, AgentType, MarketContext } from '@/types'
+import { loadConversations, updateConversation, saveConversations } from '@/lib/conversations'
+import type { ChatMessage as ChatMessageType, SlashCommand, AgentType, MarketContext, Conversation } from '@/types'
 
 const SLASH_COMMANDS: SlashCommand[] = [
   { command: '/chart', description: 'Analyze uploaded chart', agent: 'technical' },
@@ -31,7 +32,7 @@ export function ChatInterface() {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  // Reset conversation when navigating to /chat/new
+  // Load conversation or reset for new chat
   useEffect(() => {
     if (id === 'new') {
       setMessages([])
@@ -39,8 +40,30 @@ export function ChatInterface() {
       setAttachedFiles([])
       setIsLoading(false)
       setShowSlashMenu(false)
+    } else if (id) {
+      // Load existing conversation
+      const conversations = loadConversations()
+      const conversation = conversations.find(c => c.id === id)
+      if (conversation) {
+        setMessages(conversation.messages)
+      } else {
+        // Conversation not found, redirect to new chat
+        navigate('/chat/new', { replace: true })
+      }
     }
-  }, [id])
+  }, [id, navigate])
+
+  // Save conversation whenever messages change (and we have messages)
+  useEffect(() => {
+    if (messages.length > 0 && id && id !== 'new') {
+      const conversations = loadConversations()
+      const updated = updateConversation(conversations, id, messages)
+      saveConversations(updated)
+      
+      // Update sidebar by dispatching a custom event
+      window.dispatchEvent(new CustomEvent('conversationUpdated'))
+    }
+  }, [messages, id])
 
   const handleSendMessage = async () => {
     if (!input.trim()) return

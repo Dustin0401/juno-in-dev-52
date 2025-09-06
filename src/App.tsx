@@ -48,13 +48,7 @@ const App = () => (
             <Route path="/tasks" element={<ChatLayout />}>
               <Route index element={<Tasks />} />
             </Route>
-            <Route path="/alerts" element={<ChatLayout />}>
-              <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Alerts</h1><p className="text-muted">Coming soon...</p></div>} />
-            </Route>
             <Route path="/backtest" element={<Backtest />} />
-            <Route path="/uploads" element={<ChatLayout />}>
-              <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Uploads</h1><p className="text-muted">Coming soon...</p></div>} />
-            </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
