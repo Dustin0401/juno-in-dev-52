@@ -52,9 +52,6 @@ const App = () => (
               <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Alerts</h1><p className="text-muted">Coming soon...</p></div>} />
             </Route>
             <Route path="/backtest" element={<Backtest />} />
-            <Route path="/backtests" element={<ChatLayout />}>
-              <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Backtests</h1><p className="text-muted">Coming soon...</p></div>} />
-            </Route>
             <Route path="/uploads" element={<ChatLayout />}>
               <Route index element={<div className="p-6"><h1 className="text-2xl font-bold">Uploads</h1><p className="text-muted">Coming soon...</p></div>} />
             </Route>

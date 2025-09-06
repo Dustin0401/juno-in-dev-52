@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Play, Download, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroInterface from "@/assets/hero-crypto-interface.jpg";
 
 const CodePreview = () => {
@@ -33,6 +34,8 @@ const CodePreview = () => {
 };
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="min-h-screen flex items-center justify-center py-20 px-6">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
@@ -49,7 +52,12 @@ export const HeroSection = () => {
           </div>
           
           <div className="flex justify-center sm:justify-start">
-            <Button variant="hero" size="xl" className="group">
+            <Button 
+              variant="hero" 
+              size="xl" 
+              className="group"
+              onClick={() => navigate('/chat')}
+            >
               <Play className="w-5 h-5" />
               Open Dapp
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
