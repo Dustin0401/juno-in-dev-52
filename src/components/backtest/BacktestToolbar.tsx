@@ -202,9 +202,6 @@ export function BacktestToolbar({ onReset, strategyName }: BacktestToolbarProps)
         
         <Separator orientation="vertical" className="h-6" />
         
-        <Button variant="ghost" size="sm">
-          <Settings className="w-4 h-4" />
-        </Button>
       </div>
     </div>
   )

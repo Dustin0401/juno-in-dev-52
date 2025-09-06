@@ -25,7 +25,7 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
   const [strategyType, setStrategyType] = useState(data.strategyType);
 
   return (
-    <div className="bg-surface border-2 border-primary/20 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[55px] max-h-[68px] shadow-md relative group">
+    <div className="bg-surface border-2 border-primary/20 rounded-sm p-2 min-w-[140px] max-w-[155px] min-h-[70px] max-h-[85px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -71,25 +71,26 @@ export const StrategyNode = memo(({ data, id }: StrategyNodeProps) => {
                     <SelectItem value="swing_trading">Swing Trading</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
-          </PopoverContent>
+               </div>
+               <div className="pt-2 border-t">
+                 <Button 
+                   variant="destructive" 
+                   size="sm" 
+                   className="w-full h-7 text-xs"
+                   onClick={() => {
+                     if (data.onDelete) {
+                       data.onDelete(id);
+                     }
+                     setSettingsOpen(false);
+                   }}
+                 >
+                   Delete Node
+                 </Button>
+               </div>
+             </div>
+           </PopoverContent>
         </Popover>
-        
-        {/* Delete Button */}
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={() => {
-            if (data.onDelete) {
-              data.onDelete(id);
-            }
-          }}
-        >
-          <span className="text-red-500 text-xs">×</span>
-        </Button>
-      </div>
+        </div>
       </div>
       
       <div className="mb-2">

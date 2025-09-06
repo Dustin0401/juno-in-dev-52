@@ -191,7 +191,7 @@ export function BacktestCanvas() {
               size={1}
             />
             <Controls 
-              className="bg-surface border-line"
+              className="bg-surface border-line [&>button]:bg-surface [&>button]:border-line [&>button]:text-foreground hover:[&>button]:bg-accent"
               showInteractive={false}
             />
             <MiniMap 

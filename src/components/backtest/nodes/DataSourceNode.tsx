@@ -27,7 +27,7 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
   const [label, setLabel] = useState(data.label);
 
   return (
-    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[55px] max-h-[68px] shadow-md relative group">
+    <div className="bg-surface border-2 border-accent/50 rounded-sm p-2 min-w-[140px] max-w-[155px] min-h-[70px] max-h-[85px] shadow-md relative group">
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-1">
           <Database className="w-3 h-3 text-accent" />
@@ -80,25 +80,26 @@ export const DataSourceNode = memo(({ data, id }: DataSourceNodeProps) => {
                     <SelectItem value="1d">1d</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
-          </PopoverContent>
+               </div>
+               <div className="pt-2 border-t">
+                 <Button 
+                   variant="destructive" 
+                   size="sm" 
+                   className="w-full h-7 text-xs"
+                   onClick={() => {
+                     if (data.onDelete) {
+                       data.onDelete(id);
+                     }
+                     setSettingsOpen(false);
+                   }}
+                 >
+                   Delete Node
+                 </Button>
+               </div>
+             </div>
+           </PopoverContent>
         </Popover>
-        
-        {/* Delete Button */}
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={() => {
-            if (data.onDelete) {
-              data.onDelete(id);
-            }
-          }}
-        >
-          <span className="text-red-500 text-xs">×</span>
-        </Button>
-      </div>
+        </div>
       </div>
       
       <div className="flex flex-col gap-1 mb-2">

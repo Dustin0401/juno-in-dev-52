@@ -27,7 +27,7 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
   const [value, setValue] = useState(data.value || 0);
 
   return (
-    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[160px] max-w-[175px] min-h-[65px] max-h-[78px] shadow-md relative group">
+    <div className="bg-surface border-2 border-warning/50 rounded-sm p-2 min-w-[140px] max-w-[155px] min-h-[75px] max-h-[90px] shadow-md relative group">
       <Handle
         type="target"
         position={Position.Left}
@@ -77,25 +77,26 @@ export const ConditionNode = memo(({ data, id }: ConditionNodeProps) => {
               <div className="space-y-1">
                 <Label htmlFor="value" className="text-xs">Value</Label>
                 <Input id="value" type="number" value={value} onChange={(e) => setValue(Number(e.target.value))} className="h-7 text-xs" />
-              </div>
-            </div>
-          </PopoverContent>
+               </div>
+               <div className="pt-2 border-t">
+                 <Button 
+                   variant="destructive" 
+                   size="sm" 
+                   className="w-full h-7 text-xs"
+                   onClick={() => {
+                     if (data.onDelete) {
+                       data.onDelete(id);
+                     }
+                     setSettingsOpen(false);
+                   }}
+                 >
+                   Delete Node
+                 </Button>
+               </div>
+             </div>
+           </PopoverContent>
         </Popover>
-        
-        {/* Delete Button */}
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-3 w-3 p-0 hover:bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={() => {
-            if (data.onDelete) {
-              data.onDelete(id);
-            }
-          }}
-        >
-          <span className="text-red-500 text-xs">×</span>
-        </Button>
-      </div>
+        </div>
       </div>
       
       <div className="flex flex-col gap-1 mb-2">
